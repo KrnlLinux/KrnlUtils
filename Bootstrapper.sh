@@ -7,11 +7,13 @@ echo 'Install the newest mouse patch please'
 exit
 fi
 
-if [ -d "${HOME}/KRNL" ]; then
+if [[ -d "${HOME}/KRNL" ]]; 
+then
 echo 'Delete ${HOME}/KRNL To continue'
 exit
 fi
-if [ $(whoami) = 'root' ]; then
+if [[ $(whoami) = 'root' ]]; 
+then
 echo 'Dont run this with root'
 exit
 fi
