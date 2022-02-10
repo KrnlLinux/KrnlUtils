@@ -16,17 +16,13 @@ echo "echo 'UPDATE.SH > Downloading KRNL.DLL' && sleep 2 && wget https://k-stora
 echo "echo 'If you have a problem that u cant execute KRNL, you probably need to start linuxBin/CLI via grapejuice's taskmgr' && echo 'If you dont know how to update it just run update.sh' && echo 'If it attaches but it doesnt make anything make sure the internal gui in AUTOEXEC works and u have it, too the internal gui is opened with Insert'" > troubleshooting.sh
 echo '
 echo "Exporting KRNL_VERSION..."
-sleep 1
 export KRNL_VERSION="2.0"
 echo "Exporting KRNL_VERSION_PASTEBIN..."
-sleep 1
 export KRNL_VERSION_PASTEBIN="$(curl https://pastebin.com/raw/AQer6XDt)"
 echo "Downloading Console (KRNL)..."
-sleep 1
 export DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
 wget  $DOWNLOAD -O ./linuxBIN/CLI > ./linuxBIN/wgetlogs.log 
 echo "Logging Versions..."
-sleep 1
 echo "${$KRNL_VERSION}" > $HOME/KRNL/VERSIONS/VERSION_DOWNLOADER
 echo "${$KRNL_VERSION_PASTEBIN}" > $HOME/KRNL/VERSIONS/VERSION_PASTEBIN
 echo "Running UPDATE.SH"
@@ -37,8 +33,7 @@ echo "WARNING : If you have any error/question just call SimplyDeveloper"
 read PREFIX
 
 export WINEPREFIXPATH="$HOME/.local/share/grapejuice/prefixes/${PREFIX}"
-echo "Exporting WINEPREFIX..." && sleep 1 && export WINEPREFIX=$WINEPREFIXPATH && echo "Exporting WINEARCH..." && sleep 1 && export WINEARCH="win64" && echo "Exporting WINEDEBUG" && sleep
- 1 && export WINEDEBUG="-all" && echo "Exporting WINEDLLOVERRIDES" && sleep 1 && export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" && echo "Resolving WINE-TKG Binary path..." && sleep 1 && echo "Executing Console..." && $HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine $HOME/KRNL/linuxBIN/CLI
+echo "Exporting WINEPREFIX..." && export WINEPREFIX=$WINEPREFIXPATH && echo "Exporting WINEARCH..." && export WINEARCH="win64" && echo "Exporting WINEDEBUG" && export WINEDEBUG="-all" && echo "Exporting WINEDLLOVERRIDES" && export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" && echo "Resolving WINE-TKG Binary path..." && echo "Executing Console..." && $HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine $HOME/KRNL/linuxBIN/CLI
  ' > run.sh
  cd VERSION
  touch VERSION_DOWNLOADER
