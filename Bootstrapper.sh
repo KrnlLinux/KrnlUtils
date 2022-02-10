@@ -57,8 +57,6 @@ echo "${KRNL_VERSION}" > $HOME/KRNL/VERSIONS/VERSION_DOWNLOADER
 echo "${KRNL_VERSION_PASTEBIN}" > $HOME/KRNL/VERSIONS/VERSION_PASTEBIN
 echo "[#] Running Updater"
 bash ./update.sh 
-echo "alias krnl=''bash $HOME/KRNL/run.sh''" >> $HOME/.bashrc
-alias krnl="bash $HOME/KRNL/run.sh"
 echo "KRNL Downloaded, Use RUN.SH to run it or you can use the command krnl"' > download.sh
 if [ -f "$HOME/.local/share/grapejuice/prefixes/player" ]; 
 then
@@ -79,7 +77,7 @@ if [[ -z "${WINEPREFIX}" ]]; then
 echo "What is your PLAYER wineprefix name?"
 read PREFIX
 fi
-echo "export PREFIX=''${WINEPREFIX}''" >> $HOME/.bashrc
+echo ''export PREFIX="${WINEPREFIX}"'' >> $HOME/.bashrc
 echo "WARNING : If you have any error/question just call SimplyDeveloper"
 export WINEPREFIXPATH="$HOME/.local/share/grapejuice/prefixes/${PREFIX}"
 export WINEPREFIX=$WINEPREFIXPATH 
@@ -98,6 +96,5 @@ cd ..
 echo 'Execute ${HOME}/KRNL/download.sh to download the other stuff then use ${HOME}/KRNL/run.sh to run it or execute "krnl"'
 echo 'Have any problems? Go to https://github.com/SimpIyDeveIoper/KRNL_Linux and read README.md'
 cd $HOME/KRNL
-cd $HOME/KRNL
-cd $HOME/KRNL
-cd $HOME/KRNL
+echo "alias krnl='bash $HOME/KRNL/run.sh'" >> $HOME/.bashrc
+alias krnl='bash $HOME/KRNL/run.sh'
