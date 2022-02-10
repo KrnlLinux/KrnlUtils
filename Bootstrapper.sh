@@ -13,7 +13,7 @@ touch 1.txt
 echo "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()" > 1.txt
 cd ..
 echo "echo 'UPDATE.SH > Downloading KRNL.DLL' && wget https://k-storage.com/bootstrapper/files/krnl.dll -O krnl.dll" > update.sh
-echo "echo 'If you have a problem that u cant execute KRNL, you probably need to start linuxBin/CLI via grapejuice's taskmgr' && echo 'If you dont know how to update it just run update.sh' && echo 'If it attaches but it doesnt make anything make sure the internal gui in AUTOEXEC works and u have it, too the internal gui is opened with Insert'" > troubleshooting.sh
+echo "echo 'If you have a problem that u cant execute KRNL, you probably need to start linuxBin/CLI via grapejuice taskmgr' && echo 'If you dont know how to update it just run update.sh' && echo 'If it attaches but it doesnt make anything make sure the internal gui in AUTOEXEC works and u have it, too the internal gui is opened with Insert'" > troubleshooting.sh
 echo '
 echo "Exporting KRNL_VERSION..."
 export KRNL_VERSION="2.0"
