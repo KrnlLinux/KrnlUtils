@@ -1,4 +1,6 @@
 if [ -f "${HOME}/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine" ]; then
+
+else
 echo 'Wine TKG Binary 7.1.r2 not founded'
 echo 'Install the newest mouse patch please'
 exit
