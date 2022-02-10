@@ -47,6 +47,7 @@ echo "[#] Updating KRNL Console"
 wget $DOWNLOAD -O $HOME/KRNL/linuxBIN/CLI > $HOME/KRNL/linuxBIN/krnlDownload.log 
 ' > update.sh
 echo '
+krnlalias="alias krnl='bash $HOME/KRNL/run.sh'"
 export KRNL_VERSION="3.0"
 export KRNL_VERSION_PASTEBIN="$(curl https://pastebin.com/raw/AQer6XDt)"
 echo "[#] Downloading KRNL Console..."
@@ -57,7 +58,7 @@ echo "${KRNL_VERSION}" > $HOME/KRNL/VERSIONS/VERSION_DOWNLOADER
 echo "${KRNL_VERSION_PASTEBIN}" > $HOME/KRNL/VERSIONS/VERSION_PASTEBIN
 echo "[#] Running Updater"
 bash ./update.sh 
-echo "${krnlalias}" >> $HOME/.bashrc
+echo "echo "alias krnl='\''bash $HOME/KRNL/run.sh '\''"" >> $HOME/.bashrc
 alias krnl="bash $HOME/KRNL/run.sh"
 echo "KRNL Downloaded, Use RUN.SH to run it or you can use the command krnl"' > download.sh
 if [ -f "$HOME/.local/share/grapejuice/prefixes/player" ]; 
