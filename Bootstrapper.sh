@@ -27,8 +27,8 @@ export DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
 wget  $DOWNLOAD -O ./linuxBIN/CLI > ./linuxBIN/wgetlogs.log 
 echo "Logging Versions..."
 sleep 1
-cat ./VERSION/VERSION_DOWNLOADER > $KRNL_VERSION
-cat ./VERSION/VERSION_PASTEBIN > $KRNL_VERSION_PASTEBIN 
+echo "${$KRNL_VERSION}" > $HOME/KRNL/VERSIONS/VERSION_DOWNLOADER
+echo "${$KRNL_VERSION_PASTEBIN}" > $HOME/KRNL/VERSIONS/VERSION_PASTEBIN
 echo "Running UPDATE.SH"
 bash ./update.sh 
 echo "KRNL Downloaded, Use RUN.SH to run it"' > download.sh
@@ -48,3 +48,4 @@ echo 'Execute DOWNLOAD.SH to download the other parts, then use RUN.SH to run it
 echo 'If there is an update just run update.sh it will install automatically KRNL.DLL'
 echo 'Too to delete it execute "rm -R $HOME/KRNL"'
 echo 'Have any problems? Execute troubleshooting.sh'
+cd $HOME/KRNL
