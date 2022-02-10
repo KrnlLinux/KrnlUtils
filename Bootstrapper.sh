@@ -23,7 +23,7 @@ sleep 1
 export KRNL_VERSION_PASTEBIN="$(curl https://pastebin.com/raw/AQer6XDt)"
 echo "Downloading Console (KRNL)..."
 sleep 1
-export DOWNLOAD="$(curl https://pastebin.com/raw/AQer6XDt)"
+export DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
 wget  $DOWNLOAD -O ./linuxBIN/CLI > ./linuxBIN/wgetlogs.log 
 echo "Logging Versions..."
 sleep 1
