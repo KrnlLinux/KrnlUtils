@@ -1,4 +1,4 @@
-**Note:** This was not made by any KRNL Developer this was made by SimplyDeveloper
+**Note:** This was not made by any KRNL Developer this was made by SimplyDeveloper, too this will have a GUI soon
 ## How to install
 To install execute `cd /tmp && wget https://raw.githubusercontent.com/SimpIyDeveIoper/KRNL_Linux/main/Bootstrapper.sh -O Bootstrapper.sh && bash ./Bootstrapper.sh`
 Then execute `bash $HOME/KRNL/download.sh`
@@ -8,7 +8,7 @@ This will install the latest version of the KRNL console and the KRNL.dll
 ## How to run
 If you already installed to execute use `bash $HOME/KRNL/run.sh` or use the command `krnl`
 ## Troubleshooting
-<summary> We dont know about that much errors about this KRNL but we know that </summary>
+This KRNL version cant have that much errors because it doesnt have a gui but these are the common errors
 <summary> If you have any error that is NOT RELATIONED TO THE PROGRAM, you should check k!tags in the official server</summary>
 <summary> If it attaches but it doesnt make anything else, try pressing Insert and if nothing happens again check if you have the autoexec gui</summary>
 <summary> If it does not run or something like that DM SimplyDeveloper#2786</summary>
