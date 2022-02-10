@@ -23,8 +23,8 @@ echo "Downloading Console (KRNL)..."
 export DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
 wget  $DOWNLOAD -O ./linuxBIN/CLI > ./linuxBIN/wgetlogs.log 
 echo "Logging Versions..."
-echo "${$KRNL_VERSION}" > $HOME/KRNL/VERSIONS/VERSION_DOWNLOADER
-echo "${$KRNL_VERSION_PASTEBIN}" > $HOME/KRNL/VERSIONS/VERSION_PASTEBIN
+echo "${KRNL_VERSION}" > $HOME/KRNL/VERSIONS/VERSION_DOWNLOADER
+echo "${KRNL_VERSION_PASTEBIN}" > $HOME/KRNL/VERSIONS/VERSION_PASTEBIN
 echo "Running UPDATE.SH"
 bash ./update.sh 
 echo "KRNL Downloaded, Use RUN.SH to run it"' > download.sh
