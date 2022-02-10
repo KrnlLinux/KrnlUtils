@@ -98,6 +98,6 @@ touch VERSION_PASTEBIN
 cd ..
 echo 'Execute ${$HOME}/KRNL/download.sh to download the other parts, then use ${$HOME}/KRNL/run.sh to run it or execute "krnl"'
 echo 'If there is an update just run update.sh it will install automatically KRNL.DLL'
-echo 'Too to delete it execute "rm -R $HOME/KRNL"'
+echo 'To delete KRNL execute "rm -R $HOME/KRNL"'
 echo 'Have any problems? Execute troubleshooting.sh'
 cd $HOME/KRNL
