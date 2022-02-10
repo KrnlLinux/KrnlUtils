@@ -9,6 +9,6 @@ This will install the latest version of the KRNL console and the KRNL.dll
 If you already installed to execute use `bash $HOME/KRNL/run.sh` or use the command `krnl`
 ## Troubleshooting
 This KRNL version cant have that much errors because it doesnt have a gui but these are the common errors
-<summary> If you have any error that is NOT RELATIONED TO THE PROGRAM, you should check k!tags in the official server</summary>
+<summary> If you have any error that is NOT RELATIONED TO THE PROGRAM, you should check k!tags in the official server and if its relationed to grapejuice join to grapejuice's official server, dont mention anything about ME or KRNL in grapejuice's official server</summary>
 <summary> If it attaches but it doesnt make anything else, try pressing Insert and if nothing happens again check if you have the autoexec gui</summary>
 <summary> If it does not run or something like that DM SimplyDeveloper#2786</summary>
