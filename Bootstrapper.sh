@@ -12,7 +12,7 @@ cd autoexec
 touch 1.txt
 echo "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()" > 1.txt
 cd ..
-echo "echo 'UPDATE.SH > Downloading KRNL.DLL' && sleep 2 && wget https://k-storage.com/bootstrapper/files/krnl.dll -O krnl.dll" > update.sh
+echo "echo 'UPDATE.SH > Downloading KRNL.DLL' && wget https://k-storage.com/bootstrapper/files/krnl.dll -O krnl.dll" > update.sh
 echo "echo 'If you have a problem that u cant execute KRNL, you probably need to start linuxBin/CLI via grapejuice's taskmgr' && echo 'If you dont know how to update it just run update.sh' && echo 'If it attaches but it doesnt make anything make sure the internal gui in AUTOEXEC works and u have it, too the internal gui is opened with Insert'" > troubleshooting.sh
 echo '
 echo "Exporting KRNL_VERSION..."
@@ -39,8 +39,9 @@ echo "Exporting WINEPREFIX..." && export WINEPREFIX=$WINEPREFIXPATH && echo "Exp
  touch VERSION_DOWNLOADER
  touch VERSION_PASTEBIN
  cd ..
-echo 'Execute DOWNLOAD.SH to download the other parts, then use RUN.SH to run it'
+echo 'Execute $HOME/KRNL/DOWNLOAD.SH to download the other parts, then use $HOME/KRNL/RUN.SH to run it'
 echo 'If there is an update just run update.sh it will install automatically KRNL.DLL'
 echo 'Too to delete it execute "rm -R $HOME/KRNL"'
 echo 'Have any problems? Execute troubleshooting.sh'
 cd $HOME/KRNL
+
