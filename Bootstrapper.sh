@@ -39,14 +39,13 @@ krnlalias="alias krnl='bash $HOME/KRNL/run.sh'"
 echo '[+] Writing files...'
 echo "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()" > 1.txt
 cd ..
-echo "
-export DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
-echo '[#] Updating KRNL.DLL'
+echo '
+DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
+echo "[#] Updating KRNL.DLL"
 wget https://k-storage.com/bootstrapper/files/krnl.dll -O krnl.dll > ./linuxBIN/updaterLogs
-echo '[#] Updating KRNL Console'
-wget $DOWNLOAD -O $HOME/KRNL/linuxBIN/CLI > ./linuxBIN/krnlDownload.log 
-
-" > update.sh
+echo "[#] Updating KRNL Console"
+wget $DOWNLOAD -O $HOME/KRNL/linuxBIN/CLI > $HOME/KRNL/linuxBIN/krnlDownload.log 
+' > update.sh
 echo '
 export KRNL_VERSION="3.0"
 export KRNL_VERSION_PASTEBIN="$(curl https://pastebin.com/raw/AQer6XDt)"
