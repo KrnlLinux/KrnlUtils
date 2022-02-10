@@ -17,7 +17,7 @@ echo "echo 'If you have a problem that u cant execute KRNL, you probably need to
 echo '
 echo "Exporting KRNL_VERSION..."
 sleep 1
-export KRNL_VERSION="1.0"
+export KRNL_VERSION="2.0"
 echo "Exporting KRNL_VERSION_PASTEBIN..."
 sleep 1
 export KRNL_VERSION_PASTEBIN="$(curl https://pastebin.com/raw/AQer6XDt)"
