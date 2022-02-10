@@ -77,7 +77,7 @@ if [[ -z "${WINEPREFIX}" ]]; then
 echo "What is your PLAYER wineprefix name?"
 read PREFIX
 fi
-echo ''export PREFIX="${WINEPREFIX}"'' >> $HOME/.bashrc
+''export PREFIX="${WINEPREFIX}"'' >> $HOME/.bashrc
 echo "WARNING : If you have any error/question just call SimplyDeveloper"
 export WINEPREFIXPATH="$HOME/.local/share/grapejuice/prefixes/${PREFIX}"
 export WINEPREFIX=$WINEPREFIXPATH 
