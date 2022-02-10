@@ -11,7 +11,7 @@ if [ -d "${HOME}/KRNL" ]; then
 echo 'Delete ${HOME}/KRNL To continue'
 exit
 fi
-if [ $(whoami) = 'root' ] then
+if [ $(whoami) = 'root' ]; then
 echo 'Dont run this with root'
 exit
 fi
