@@ -19,7 +19,7 @@ echo 'Dont run this with root'
 exit
 fi
 
-echo '$(tput setaf 2) [$(tput setaf 3) + $(tput setaf 2) ] $(tput setaf 0) Creating directories...'
+echo '[+] Creating directories...'
 cd $HOME
 mkdir KRNL
 cd KRNL
@@ -27,36 +27,36 @@ mkdir autoexec
 mkdir linuxBIN
 mkdir VERSION
 mkdir workspace
-echo '$(tput setaf 2)[$(tput setaf 3)+$(tput setaf 2)]$(tput setaf 0) Creating files...'
+echo '[+] Creating files...'
 touch update.sh
 touch run.sh
 touch download.sh
-echo '$(tput setaf 2)[$(tput setaf 3)+$(tput setaf 2)]$(tput setaf 0)Creating Internal Gui AutoExec...'
+echo '[+] Creating Internal Gui AutoExec...'
 cd autoexec
 touch 1.txt
-echo '$(tput setaf 3)[$(tput setaf 6):$(tput setaf 3)]$(tput setaf 0) Exporting KRNLALIAS...'
+echo '[:] Exporting KRNLALIAS...'
 krnlalias="alias krnl='bash $HOME/KRNL/run.sh'"
-echo '$(tput setaf 2)[$(tput setaf 3)+$(tput setaf 2)]$(tput setaf 0) Writing files...'
+echo '[+] Writing files...'
 echo "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()" > 1.txt
 cd ..
 echo "
 export DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
-echo '$(tput setaf 2)[#] Updating KRNL.DLL'
+echo '[#] Updating KRNL.DLL'
 wget https://k-storage.com/bootstrapper/files/krnl.dll -O krnl.dll > ./linuxBIN/updaterLogs
-echo '$(tput setaf 2)[#] Updating KRNL Console'
+echo '[#] Updating KRNL Console'
 wget $DOWNLOAD -O $HOME/KRNL/linuxBIN/CLI > ./linuxBIN/krnlDownload.log 
 
 " > update.sh
 echo '
 export KRNL_VERSION="3.0"
 export KRNL_VERSION_PASTEBIN="$(curl https://pastebin.com/raw/AQer6XDt)"
-echo "$(tput setaf 2)[#] Downloading KRNL Console..."
+echo "[#] Downloading KRNL Console..."
 export DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
 wget  $DOWNLOAD -O ./linuxBIN/CLI > $HOME/KRNL/linuxBIN/krnlDownload.log 
-echo "$(tput setaf 3)[$(tput setaf 6):$(tput setaf 3)]$(tput setaf 0) Writing Extra Files..."
+echo "[:] Writing Extra Files..."
 echo "${KRNL_VERSION}" > $HOME/KRNL/VERSIONS/VERSION_DOWNLOADER
 echo "${KRNL_VERSION_PASTEBIN}" > $HOME/KRNL/VERSIONS/VERSION_PASTEBIN
-echo "$(tput setaf 2)[#] Running Updater"
+echo "[#] Running Updater"
 bash ./update.sh 
 echo "${krnlalias}" >> $HOME/.bashrc
 alias krnl="bash $HOME/KRNL/run.sh"
@@ -70,7 +70,7 @@ export WINEPREFIX=$WINEPREFIXPATH
 export WINEARCH="win64"
 export WINEDEBUG="-all" 
 export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" 
-echo "$(tput setaf 2)[#] Executing Console..." 
+echo "[#] Executing Console..." 
 $HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine $HOME/KRNL/linuxBIN/CLI
 
 ' > run.sh
@@ -87,11 +87,11 @@ export WINEPREFIX=$WINEPREFIXPATH
 export WINEARCH="win64" 
 export WINEDEBUG="-all" 
 export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" 
-echo "$(tput setaf 1)[#] Executing Console..." 
+echo "[#] Executing Console..." 
 $HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine $HOME/KRNL/linuxBIN/CLI
  ' > run.sh
 fi
-echo '$(tput setaf 1)Writing Extra Files'
+echo 'Writing Extra Files'
 cd VERSION
 touch VERSION_DOWNLOADER
 touch VERSION_PASTEBIN
