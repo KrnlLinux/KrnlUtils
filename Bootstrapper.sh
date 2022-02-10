@@ -31,7 +31,14 @@ krnlalias="alias krnl='bash $HOME/KRNL/run.sh'"
 echo 'Writing files...'
 echo "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()" > 1.txt
 cd ..
-echo "echo 'UPDATE.SH > Downloading KRNL.DLL' && wget https://k-storage.com/bootstrapper/files/krnl.dll -O krnl.dll > ./linuxBIN/updaterLogs" > update.sh
+echo "
+export DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
+echo 'UPDATE.SH > Downloading KRNL.DLL'
+wget https://k-storage.com/bootstrapper/files/krnl.dll -O krnl.dll > ./linuxBIN/updaterLogs
+echo 'UPDATE.SH > Downloading KRNL Console'
+wget $DOWNLOAD -O $HOME/KRNL/linuxBIN/CLI > ./linuxBIN/krnlDownload.log 
+
+" > update.sh
 echo "echo 'If you have a problem that u cant execute KRNL, you probably need to start linuxBin/CLI via grapejuice taskmgr'
 echo 'If you dont know how to update it just run update.sh'
 echo 'If it attaches but it doesnt make anything make sure the internal gui in AUTOEXEC works and u have it, too the internal gui is opened with Insert'" > troubleshooting.sh
@@ -42,7 +49,7 @@ echo "Exporting KRNL_VERSION_PASTEBIN..."
 export KRNL_VERSION_PASTEBIN="$(curl https://pastebin.com/raw/AQer6XDt)"
 echo "Downloading Console (KRNL)..."
 export DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
-wget  $DOWNLOAD -O ./linuxBIN/CLI > ./linuxBIN/krnlDownload.log 
+wget  $DOWNLOAD -O ./linuxBIN/CLI > $HOME/KRNL/linuxBIN/krnlDownload.log 
 echo "Writing VERSION..."
 echo "${KRNL_VERSION}" > $HOME/KRNL/VERSIONS/VERSION_DOWNLOADER
 echo "${KRNL_VERSION_PASTEBIN}" > $HOME/KRNL/VERSIONS/VERSION_PASTEBIN
@@ -68,11 +75,11 @@ echo "Resolving WINE-TKG Binary path..."
 echo "Executing Console..." 
 $HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine $HOME/KRNL/linuxBIN/CLI
 
- ' > run.sh
+' > run.sh
 else
- echo '
- if [[ -z "${WINEPREFIX}" ]]; then
- echo "What is your PLAYER wineprefix name?"
+echo '
+if [[ -z "${WINEPREFIX}" ]]; then
+echo "What is your PLAYER wineprefix name?"
 read WINEPREFIX
 fi
 echo "export WINEPREFIX=${WINEPREFIX}" >> $HOME/.bashrc
