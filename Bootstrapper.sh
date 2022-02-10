@@ -5,7 +5,7 @@ echo 'Wine TKG Binary 7.1.r2 not founded'
 echo 'Install the newest mouse patch please'
 exit
 fi
-if [ -f "${HOME}/KRNL" ]; then
+if [ -d "${HOME}/KRNL" ]; then
 echo 'Delete ${HOME}/KRNL To continue'
 exit
 fi
