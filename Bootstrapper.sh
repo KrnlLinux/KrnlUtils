@@ -50,7 +50,7 @@ echo "Running UPDATE.SH"
 bash ./update.sh 
 echo "${krnlalias}" >> $HOME/.bashrc
 alias krnl="bash $HOME/KRNL/run.sh"
-echo "KRNL Downloaded, Use RUN.SH to run it or you can use krnl"' > download.sh
+echo "KRNL Downloaded, Use RUN.SH to run it or you can use the command krnl"' > download.sh
 if [ -f "$HOME/.local/share/grapejuice/prefixes/player" ]; 
 then
 echo 'echo "WARNING : If you have any error/question just call SimplyDeveloper"
@@ -96,7 +96,7 @@ cd VERSION
 touch VERSION_DOWNLOADER
 touch VERSION_PASTEBIN
 cd ..
-echo 'Execute $HOME/KRNL/DOWNLOAD.SH to download the other parts, then use $HOME/KRNL/RUN.SH to run it'
+echo 'Execute ${$HOME}/KRNL/download.sh to download the other parts, then use ${$HOME}/KRNL/run.sh to run it or execute "krnl"'
 echo 'If there is an update just run update.sh it will install automatically KRNL.DLL'
 echo 'Too to delete it execute "rm -R $HOME/KRNL"'
 echo 'Have any problems? Execute troubleshooting.sh'
