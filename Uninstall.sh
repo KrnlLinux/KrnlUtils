@@ -1,5 +1,5 @@
 echo 'Uninstalling KRNL...'
-if test -f "${HOME}/KRNL" ;
+if [[ -f "${HOME}/KRNL"]] ;
 then
 rm -R $HOME/KRNL
 fi
