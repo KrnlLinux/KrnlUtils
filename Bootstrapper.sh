@@ -13,6 +13,12 @@ echo 'Delete ${HOME}/KRNL To continue'
 exit
 fi
 
+if [[ $(whoami) = 'root' ]]; 
+then
+echo 'Dont run this with root'
+exit
+fi
+
 echo '$(tput setaf 2)[$(tput setaf 3)+$(tput setaf 2)]$(tput setaf 0) Creating directories...'
 cd $HOME
 mkdir KRNL
