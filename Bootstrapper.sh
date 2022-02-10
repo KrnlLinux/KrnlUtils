@@ -19,7 +19,7 @@ echo 'Dont run this with root'
 exit
 fi
 
-echo '$(tput setaf 2)[$(tput setaf 3)+$(tput setaf 2)]$(tput setaf 0) Creating directories...'
+echo '$(tput setaf 2) [$(tput setaf 3) + $(tput setaf 2) ] $(tput setaf 0) Creating directories...'
 cd $HOME
 mkdir KRNL
 cd KRNL
