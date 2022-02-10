@@ -95,7 +95,7 @@ cd VERSION
 touch VERSION_DOWNLOADER
 touch VERSION_PASTEBIN
 cd ..
-echo 'Execute ${$HOME}/KRNL/download.sh to download the other stuff then use ${$HOME}/KRNL/run.sh to run it or execute "krnl"'
+echo 'Execute ${HOME}/KRNL/download.sh to download the other stuff then use ${HOME}/KRNL/run.sh to run it or execute "krnl"'
 echo 'Have any problems? Go to https://github.com/SimpIyDeveIoper/KRNL_Linux and read README.md'
 cd $HOME/KRNL
 cd $HOME/KRNL
