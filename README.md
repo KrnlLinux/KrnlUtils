@@ -1,6 +1,6 @@
 **Note:** This was not made by any KRNL Developer this was made by SimplyDeveloper, too this will have a GUI soon
-## Requirements
-Python3\n
+# Requirements
+Python3
 Bash
 ## How to install
 To install execute `cd /tmp && wget https://raw.githubusercontent.com/SimpIyDeveIoper/KRNL_Linux/main/Bootstrapper -O Bootstrapper`
