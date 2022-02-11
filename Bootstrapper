@@ -49,8 +49,8 @@ def Help():
     print("    --delete-fluxus : Deletes fluxus")
     print("    --download-autoexec : Downloads the internal gui\n")
     print(f"{Fore.CYAN}Other Exploits : ")
-    print("    --fluxus (-f) : Installs fluxus instead of KRNL")
-    print("    --oxygen-u (-OU) : Installs oxygen u instead of KRNL\n")
+    print("    --install-fluxus (-f) : Installs fluxus instead of KRNL")
+    print("    --install-oxygenu (-OU) : Installs oxygen u instead of KRNL\n")
     print(f"{Fore.GREEN}Updater : ")
     print("    --update-krnl (-uk) : Updates KRNL")
     print("    --update-ou (-uo) : Updates Oxygen U")
@@ -152,11 +152,33 @@ if __name__ == '__main__':
             ' > krnl""")
             print(f"{Fore.GREEN} [+] {Fore.WHITE}Downloading Dependencies")
             os.system("""
+            cd autoexec
+            touch 1.txt
+            echo "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()" > 1.txt
+            cd $HOME/KRNL
             DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
             wget -q https://k-storage.com/bootstrapper/files/krnl.dll -O $HOME/KRNL/krnl.dll
             wget -q $DOWNLOAD -O $HOME/KRNL/bin/CLI
             """)
             print(f"{Fore.MAGENTA} [:] {Fore.WHITE}KRNL Downloaded")
+        elif GetFlag("--download-autoexec"):
+            if Path("$HOME/KRNL").is_dir():
+                if Path("$HOME/KRNL/autoexec/1.txt").is_file():
+                    os.system("""
+                    cd autoexec
+                    echo "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()" > 1.txt
+                    cd $HOME/KRNL
+                    """)
+                else:
+                    os.system("""
+                    cd autoexec
+                    touch 1.txt
+                    echo "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()" > 1.txt
+                    cd $HOME/KRNL
+                    """)
+                print(f"{Fore.MAGENTA} [:] {Fore.WHITE}Done")
+            else:
+                print(f"{Fore.RED} [:] {Fore.WHITE}Krnl not installed")
         elif GetFlag("--update-krnl") or GetFlag("-uk"):
             flagexecuted = True
             print(f"{Fore.GREEN} [+] {Fore.WHITE}Downloading Dependencies")
@@ -174,6 +196,5 @@ if __name__ == '__main__':
                     lol = sys.argv[1]
                 except:
                     Help()
-        
-            
+
 # Changing KRNL Linux to python because python > bash
