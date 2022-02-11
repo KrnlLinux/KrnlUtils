@@ -42,16 +42,16 @@ cd ..
 echo '
 DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
 echo "[#] Updating KRNL.DLL"
-wget https://k-storage.com/bootstrapper/files/krnl.dll -O krnl.dll > ./linuxBIN/updaterLogs
+wget -q https://k-storage.com/bootstrapper/files/krnl.dll -O krnl.dll
 echo "[#] Updating KRNL Console"
-wget $DOWNLOAD -O $HOME/KRNL/linuxBIN/CLI > $HOME/KRNL/linuxBIN/krnlDownload.log 
+wget -q $DOWNLOAD -O $HOME/KRNL/linuxBIN/CLI 
 ' > update.sh
 echo '
 export KRNL_VERSION="3.0"
 export KRNL_VERSION_PASTEBIN="$(curl https://pastebin.com/raw/AQer6XDt)"
 echo "[#] Downloading KRNL Console..."
 export DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
-wget  $DOWNLOAD -O ./linuxBIN/CLI > $HOME/KRNL/linuxBIN/krnlDownload.log 
+wget -q $DOWNLOAD -O ./linuxBIN/CLI
 echo "[:] Writing Extra Files..."
 echo "${KRNL_VERSION}" > $HOME/KRNL/VERSIONS/VERSION_DOWNLOADER
 echo "${KRNL_VERSION_PASTEBIN}" > $HOME/KRNL/VERSIONS/VERSION_PASTEBIN
@@ -97,3 +97,4 @@ echo 'Have any problems? Go to https://github.com/SimpIyDeveIoper/KRNL_Linux and
 cd $HOME/KRNL
 echo "alias krnl='bash $HOME/KRNL/run.sh'" >> $HOME/.bashrc
 alias krnl='bash $HOME/KRNL/run.sh'
+# Im making it just better, it already works
