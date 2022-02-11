@@ -2,10 +2,8 @@
 ## How to install
 To install execute `cd /tmp && wget https://raw.githubusercontent.com/SimpIyDeveIoper/KRNL_Linux/main/Bootstrapper -O Bootstrapper`
 Then execute which python3, add the next text to the start of Bootstrapper and you can execute it using ./Bootstrapper
-`
-#!WHICH PYTHON3 OUTPUT HERE, RETARDEDS
-# -*- coding: utf-8 -*-
-`
+`#!WHICH PYTHON3 OUTPUT HERE, RETARDEDS
+# -*- coding: utf-8 -*-`
 ## How to update
 WARNING : THIS WILL ONLY WORK WITH THE OLD BOOTSTRAPPER
 To update KRNL execute `bash $HOME/KRNL/update.sh`
