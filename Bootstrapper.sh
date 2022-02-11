@@ -20,27 +20,36 @@ else
 $distro="idk"
 fi
 
-if [[ $1 == "--help" ]];
+if [[ $1 = "--help" ]];
 then
 echo 'Help:'
+echo '--uninstall-krnl : Uninstalls KRNL'
 echo '--download-krnl-dll : Downloads KRNL.DLL'
 echo '--grapejuice-install : Install grapejuice'
 echo '--krnl-download : Installs KRNL but not anything more'
 echo '-f : This was going to be called --run-download, the thing that this flag does is execute download.sh at the end of the installation'
 echo '--install-tkg : Installs WINE TKG Binary (mouse patch)'
+echo 'READ : You only can use 1 flag at the time, soon this will be in python to fix that error and a bunch more of errors'
 exit
-elif [[ $1 == "--download-krnl-dll" ]];
+elif [[ $1 = "--uninstall-krnl" ]];
+then
+if [[ -d "$HOME/KRNL" ]];
+then
+rm -R $HOME/KRNL
+exit
+fi
+elif [[ $1 = "--download-krnl-dll" ]];
 then
 wget -q https://k-storage.com/bootstrapper/files/krnl.dll -O $HOME/krnl.dll
 exit
-elif [[ $1 == "--krnl-download" ]];
+elif [[ $1 = "--krnl-download" ]];
 then
 # KRNL Download flag
 export DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
 wget -q https://k-storage.com/bootstrapper/files/krnl.dll -O $HOME/krnl.dll
 wget -q $DOWNLOAD -O $HOME/krnl.exe
 exit
-elif [[ $1 == "--install-tkg" ]];
+elif [[ $1 = "--install-tkg" ]];
 then
 # Install WINE-TKG
 cd /tmp
@@ -48,10 +57,10 @@ wget https://pastebin.com/raw/5SeVb005 -O install.py
 python3 install.py
 exit
 fi
-elif [[ $1 == "--grapejuice-install" ]];
+elif [[ $1 = "--grapejuice-install" ]];
 then
 
-if [[ $distro == "debian" ]];
+if [[ $distro = "debian" ]];
 then
 # uvuntu insteletion
 sudo apt update
@@ -61,7 +70,7 @@ curl https://gitlab.com/brinkervii/grapejuice/-/raw/master/ci_scripts/signing_ke
 sudo tee /etc/apt/sources.list.d/grapejuice.list <<< 'deb [signed-by=/usr/share/keyrings/grapejuice-archive-keyring.gpg] https://brinkervii.gitlab.io/grapejuice/repositories/debian/ universal main' > /dev/null
 sudo apt update -y
 sudo apt install -y grapejuice
-elif [[ $distro == "arch" ]];
+elif [[ $distro = "arch" ]];
 then
 # I use arch btw, installation
 cd $HOME
@@ -171,4 +180,8 @@ echo 'Have any problems? Go to https://github.com/SimpIyDeveIoper/KRNL_Linux and
 cd $HOME/KRNL
 echo "alias krnl='bash $HOME/KRNL/run.sh'" >> $HOME/.bashrc
 alias krnl='bash $HOME/KRNL/run.sh'
+if [[ $1 = "-f" ]];
+then
+bash $HOME/KRNL/download.sh
+fi
 # Im making it just better, it already works
