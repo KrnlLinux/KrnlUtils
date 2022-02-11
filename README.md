@@ -11,8 +11,8 @@ If you already installed to execute use `bash $HOME/KRNL/run.sh` or use the comm
 This KRNL version cant have that much errors because it doesnt have a gui but these are the common errors
 <summary> If you have any error that is NOT RELATIONED TO THE PROGRAM, you should check k!tags in the official server and if its relationed to grapejuice join to grapejuice's official server, dont mention anything about ME or KRNL in grapejuice's official server</summary>
 <summary> If it attaches but it doesnt make anything else, try pressing Insert and if nothing happens again check if you have the autoexec gui</summary>
-<summary> Doesnt even attach? You need to probably install .NET Framework 4.7.2 using winetricks, if this does not work talk to SimplyDeveloper</summary>
-<summary> If it does not run or something like that DM SimplyDeveloper#2786</summary>
+<summary> Doesnt even attach? You need to probably install .NET Framework 4.7.2 using winetricks, if this does not work talk to SimplyDeveloper or make an issue in the issues page</summary>
+<summary> If it does not run or something like that DM SimplyDeveloper#2786 or make an issue in the issues page</summary>
 
 ## New Updates and notes
 Added flags use --help to see them
