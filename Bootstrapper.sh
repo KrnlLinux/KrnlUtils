@@ -46,6 +46,8 @@ wget -q https://k-storage.com/bootstrapper/files/krnl.dll -O $HOME/KRNL/krnl.dll
 echo "[#] Updating KRNL Console"
 wget -q $DOWNLOAD -O $HOME/KRNL/linuxBIN/CLI 
 ' > update.sh
+touch $HOME/KRNL/VERSION/VERSION_DOWNLOADER
+touch $HOME/KRNL/VERSION/VERSION_PASTEBIN
 echo '
 export KRNL_VERSION="3.0"
 export KRNL_VERSION_PASTEBIN="$(curl https://pastebin.com/raw/AQer6XDt)"
@@ -88,9 +90,6 @@ $HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.
  ' > run.sh
 fi
 echo 'Writing Extra Files'
-cd VERSION
-touch VERSION_DOWNLOADER
-touch VERSION_PASTEBIN
 cd ..
 echo 'Execute ${HOME}/KRNL/download.sh to download the other stuff then use ${HOME}/KRNL/run.sh to run it or execute "krnl"'
 echo 'Have any problems? Go to https://github.com/SimpIyDeveIoper/KRNL_Linux and read README.md'
