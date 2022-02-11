@@ -59,6 +59,7 @@ def Help():
 
 def GrapejuiceInstall():
     if distro == "debian":
+        print(f"{Fore.MAGENTA} [:] {Fore.WHITE}Debian Detected")
         os.system("""
             sudo apt update
             sudo apt upgrade -y
@@ -69,6 +70,7 @@ def GrapejuiceInstall():
             sudo apt install -y grapejuice
         """)
     elif distro == "arch":
+        print(f"{Fore.MAGENTA} [:] {Fore.WHITE}Arch Detected")
         os.system("""
         sudo pacman -S base-devel
         cd $HOME
@@ -112,7 +114,7 @@ if __name__ == '__main__':
             flagexecuted = True
             os.system("""
             cd /tmp
-            wget https://pastebin.com/raw/5SeVb005 -O install.py
+            wget https://pastebin.com/raw/5SeVb005 -O install.py > /dev/null
             python3 install.py  
             """)
         elif GetFlag("--install-krnl") or GetFlag("-ik"):
@@ -135,7 +137,7 @@ if __name__ == '__main__':
                 if re.search("Y",dainput) == True:
                     os.system("""
                         cd /tmp
-                        wget https://pastebin.com/raw/5SeVb005 -O install.py
+                        wget https://pastebin.com/raw/5SeVb005 -O install.py > /dev/null
                         python3 install.py  
                     """)
                 elif re.search("N",dainput) == True:
@@ -143,7 +145,7 @@ if __name__ == '__main__':
                 else:
                     os.system("""
                         cd /tmp
-                        wget https://pastebin.com/raw/5SeVb005 -O install.py
+                        wget https://pastebin.com/raw/5SeVb005 -O install.py > /dev/null
                         python3 install.py  
                     """)
             print(f"{Fore.GREEN} [+] {Fore.WHITE}Making Directories")
@@ -182,8 +184,8 @@ if __name__ == '__main__':
             echo "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()" > 1.txt
             cd $HOME/KRNL
             DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
-            wget -q https://k-storage.com/bootstrapper/files/krnl.dll -O $HOME/KRNL/krnl.dll
-            wget -q $DOWNLOAD -O $HOME/KRNL/bin/CLI
+            wget -q https://k-storage.com/bootstrapper/files/krnl.dll -O $HOME/KRNL/krnl.dll > /dev/null
+            wget -q $DOWNLOAD -O $HOME/KRNL/bin/CLI > /dev/null
             """)
             print(f"{Fore.MAGENTA} [:] {Fore.WHITE}KRNL Downloaded")
         elif GetFlag("--download-autoexec"):
@@ -213,8 +215,8 @@ if __name__ == '__main__':
             if exists(f"/home/{getpass.getuser()}/KRNL") == True:
                 os.system("""
                 DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
-                wget -q https://k-storage.com/bootstrapper/files/krnl.dll -O $HOME/KRNL/krnl.dll
-                wget -q $DOWNLOAD -O $HOME/KRNL/bin/CLI
+                wget -q https://k-storage.com/bootstrapper/files/krnl.dll -O $HOME/KRNL/krnl.dll > /dev/null
+                wget -q $DOWNLOAD -O $HOME/KRNL/bin/CLI > /dev/null
                 """)
             else:
                 print("KRNL Is not downloaded")
