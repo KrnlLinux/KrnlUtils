@@ -45,16 +45,16 @@ def Help():
     print("    --install-tkg (-T) : Installs the patched mouse wine for grapejuice\n")
     print(f"{Fore.RED}Troubleshooting : ")
     print("    --delete-krnl : Removes KRNL")
-    print("    --delete-ou : Deletes Oxygen U")
-    print("    --delete-fluxus : Deletes fluxus")
+    print("    --delete-ou : Deletes Oxygen U (NOT ACTIVE)")
+    print("    --delete-fluxus : Deletes fluxus (NOT ACTIVE)")
     print("    --download-autoexec : Downloads the internal gui\n")
     print(f"{Fore.CYAN}Other Exploits : ")
-    print("    --install-fluxus (-f) : Installs fluxus instead of KRNL")
-    print("    --install-oxygenu (-OU) : Installs oxygen u instead of KRNL\n")
+    print("    --install-fluxus (-f) : Installs fluxus instead of KRNL (NOT ACTIVE)")
+    print("    --install-oxygenu (-OU) : Installs oxygen u instead of KRNL (NOT ACTIVE)\n")
     print(f"{Fore.GREEN}Updater : ")
     print("    --update-krnl (-uk) : Updates KRNL")
-    print("    --update-ou (-uo) : Updates Oxygen U")
-    print("    --update-fluxus (-uf) : Updates Fluxus")
+    print("    --update-ou (-uo) : Updates Oxygen U (NOT ACTIVE)")
+    print("    --update-fluxus (-uf) : Updates Fluxus (NOT ACTIVE)")
 
 def GrapejuiceInstall():
     if distro == "debian":
@@ -98,6 +98,15 @@ if __name__ == '__main__':
         elif GetFlag("--grapejuice-install") or GetFlag("-G"):
             flagexecuted = True
             GrapejuiceInstall()
+        elif GetFlag("--delete-krnl"):
+            flagexecuted = True
+            if Path("$HOME/KRNL").is_dir:
+                os.system("""
+                rm -R $HOME/KRNL
+                """)
+                print(f"{Fore.MAGENTA} [:] {Fore.WHITE}Done")
+            else:
+                print(f"{Fore.RED} [:] {Fore.WHITE}Krnl not installed")
         elif GetFlag("--install-tkg") or GetFlag("-T"):
             flagexecuted = True
             os.system("""
@@ -162,6 +171,7 @@ if __name__ == '__main__':
             """)
             print(f"{Fore.MAGENTA} [:] {Fore.WHITE}KRNL Downloaded")
         elif GetFlag("--download-autoexec"):
+            flagexecuted = True
             if Path("$HOME/KRNL").is_dir():
                 if Path("$HOME/KRNL/autoexec/1.txt").is_file():
                     os.system("""
@@ -190,6 +200,7 @@ if __name__ == '__main__':
                 """)
             else:
                 print("KRNL Is not downloaded")
+            print(f"{Fore.MAGENTA} [:] {Fore.WHITE}Done")
         else:
             if flagexecuted == False:
                 try:
