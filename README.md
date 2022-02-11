@@ -13,3 +13,7 @@ This KRNL version cant have that much errors because it doesnt have a gui but th
 <summary> If it attaches but it doesnt make anything else, try pressing Insert and if nothing happens again check if you have the autoexec gui</summary>
 <summary> Doesnt even attach? You need to probably install .NET Framework 4.7.2 using winetricks, if this does not work talk to SimplyDeveloper</summary>
 <summary> If it does not run or something like that DM SimplyDeveloper#2786</summary>
+
+## New Updates and notes
+Added flags use --help to see them
+Soon im going to change to python
