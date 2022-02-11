@@ -3,9 +3,10 @@ import getpass
 from pathlib import Path
 import sys
 import re
-gentoo = Path("/usr/bin/emerge").is_file()
-debian = Path("/usr/bin/apt").is_file()
-arch = Path("/usr/bin/pacman").is_file()
+from os.path import exists
+gentoo = exists("/usr/bin/emerge")
+debian = exists("/usr/bin/apt")
+arch = exists("/usr/bin/pacman")
 flagexecuted = False
 forloopc = 0
 def bash(text):
@@ -38,7 +39,7 @@ if getpass.getuser() == "root":
 def Help():
     print(f"KRNL Linux Help\n")
     print(f"{Fore.WHITE}Misc : ")
-    print("    --krnl-install (-ki) : Installs KRNL")
+    print("    --install-krnl (-ik) : Installs KRNL")
     print("    --help (-h) : Displays this list\n")
     print(f"{Fore.MAGENTA}Grapejuice : ")
     print("    --grapejuice-install (-G) : Installs grapejuice using the wiki")
@@ -100,7 +101,7 @@ if __name__ == '__main__':
             GrapejuiceInstall()
         elif GetFlag("--delete-krnl"):
             flagexecuted = True
-            if Path("$HOME/KRNL").is_dir:
+            if exists(f"/home/{getpass.getuser()}/KRNL"):
                 os.system("""
                 rm -R $HOME/KRNL
                 """)
@@ -114,9 +115,22 @@ if __name__ == '__main__':
             wget https://pastebin.com/raw/5SeVb005 -O install.py
             python3 install.py  
             """)
-        elif GetFlag("--krnl-install") or GetFlag("-ki"):
+        elif GetFlag("--install-krnl") or GetFlag("-ik"):
             flagexecuted = True
-            if Path("$HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e").is_dir == False:
+            if exists(f"/home/{getpass.getuser()}") == True:
+                print("WARNING : IT WILL BE DELETED FOREVER, IT WILL NOT EVEN MOVE TO THE TRASH CAN")
+                dainput = input(f"{Fore.RED} [:] {Fore.WHITE}KRNL Already installed, do u want to delete it? (Y/N) : ")
+                if re.search("Y",dainput) == True:
+                    os.system("""
+                    rm -R $HOME/KRNL
+                    """)
+                elif re.search("N",dainput) == True:
+                    print("")
+                else:
+                    os.system("""
+                    rm -R $HOME/KRNL
+                    """)
+            if exists(f"/home/{getpass.getuser()}/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e") == False:
                 dainput = input(f"{Fore.RED} [:] {Fore.WHITE}You dont have the wine mouse patch, this will make krnl not work. Do u want to install the mouse patch? (Y/N) : ")
                 if re.search("Y",dainput) == True:
                     os.system("""
@@ -142,6 +156,7 @@ if __name__ == '__main__':
             mkdir bin""")
             print(f"{Fore.GREEN} [+] {Fore.WHITE}Making KRNL File")
             os.system("""
+            cd $HOME/KRNL
             touch krnl
             chmod +x krnl
             echo '
@@ -161,6 +176,7 @@ if __name__ == '__main__':
             ' > krnl""")
             print(f"{Fore.GREEN} [+] {Fore.WHITE}Downloading Dependencies")
             os.system("""
+            cd $HOME/KRNL
             cd autoexec
             touch 1.txt
             echo "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()" > 1.txt
@@ -172,15 +188,17 @@ if __name__ == '__main__':
             print(f"{Fore.MAGENTA} [:] {Fore.WHITE}KRNL Downloaded")
         elif GetFlag("--download-autoexec"):
             flagexecuted = True
-            if Path("$HOME/KRNL").is_dir():
-                if Path("$HOME/KRNL/autoexec/1.txt").is_file():
+            if exists(f"/home/{getpass.getuser()}/KRNL")():
+                if exists(f"/home/{getpass.getuser()}/KRNL/autoexec/1.txt")():
                     os.system("""
+                    cd $HOME/KRNL
                     cd autoexec
                     echo "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()" > 1.txt
                     cd $HOME/KRNL
                     """)
                 else:
                     os.system("""
+                    cd $HOME/KRNL
                     cd autoexec
                     touch 1.txt
                     echo "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()" > 1.txt
@@ -192,7 +210,7 @@ if __name__ == '__main__':
         elif GetFlag("--update-krnl") or GetFlag("-uk"):
             flagexecuted = True
             print(f"{Fore.GREEN} [+] {Fore.WHITE}Downloading Dependencies")
-            if Path("$HOME/KRNL").is_dir() == True:
+            if exists(f"/home/{getpass.getuser()}/KRNL") == True:
                 os.system("""
                 DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
                 wget -q https://k-storage.com/bootstrapper/files/krnl.dll -O $HOME/KRNL/krnl.dll
