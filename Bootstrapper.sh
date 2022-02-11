@@ -42,7 +42,7 @@ cd ..
 echo '
 DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
 echo "[#] Updating KRNL.DLL"
-wget -q https://k-storage.com/bootstrapper/files/krnl.dll -O krnl.dll
+wget -q https://k-storage.com/bootstrapper/files/krnl.dll -O $HOME/KRNL/krnl.dll
 echo "[#] Updating KRNL Console"
 wget -q $DOWNLOAD -O $HOME/KRNL/linuxBIN/CLI 
 ' > update.sh
@@ -51,7 +51,7 @@ export KRNL_VERSION="3.0"
 export KRNL_VERSION_PASTEBIN="$(curl https://pastebin.com/raw/AQer6XDt)"
 echo "[#] Downloading KRNL Console..."
 export DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
-wget -q $DOWNLOAD -O ./linuxBIN/CLI
+wget -q $DOWNLOAD -O $HOME/KRNL/linuxBIN/CLI
 echo "[:] Writing Extra Files..."
 echo "${KRNL_VERSION}" > $HOME/KRNL/VERSIONS/VERSION_DOWNLOADER
 echo "${KRNL_VERSION_PASTEBIN}" > $HOME/KRNL/VERSIONS/VERSION_PASTEBIN
