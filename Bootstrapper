@@ -1,0 +1,181 @@
+import os
+import getpass
+from pathlib import Path
+import sys
+import re
+gentoo = Path("/usr/bin/emerge").is_file()
+debian = Path("/usr/bin/apt").is_file()
+arch = Path("/usr/bin/pacman").is_file()
+flagexecuted = False
+forloopc = 0
+def bash(text):
+    os.system(text)
+
+def GetDistro():
+    if gentoo == True:
+        return "gentoo"
+    if debian == True:
+        return "debian"
+    if arch == True:
+        return "arch"
+    if arch == False and gentoo == False and debian == False:
+        return "idk"
+distro = GetDistro()
+try:
+    import colorama
+    from colorama import Fore, Back, Style
+except ModuleNotFoundError:
+    os.system("pip3 install --user colorama")
+import colorama
+from colorama import Fore,Back,Style
+
+colorama.init(autoreset=True)
+if getpass.getuser() == "root":
+    print("Do not run this with root")
+
+    sys.exit()
+
+def Help():
+    print(f"KRNL Linux Help\n")
+    print(f"{Fore.WHITE}Misc : ")
+    print("    --krnl-install (-ki) : Installs KRNL")
+    print("    --help (-h) : Displays this list\n")
+    print(f"{Fore.MAGENTA}Grapejuice : ")
+    print("    --grapejuice-install (-G) : Installs grapejuice using the wiki")
+    print("    --install-tkg (-T) : Installs the patched mouse wine for grapejuice\n")
+    print(f"{Fore.RED}Troubleshooting : ")
+    print("    --delete-krnl : Removes KRNL")
+    print("    --delete-ou : Deletes Oxygen U")
+    print("    --delete-fluxus : Deletes fluxus")
+    print("    --download-autoexec : Downloads the internal gui\n")
+    print(f"{Fore.CYAN}Other Exploits : ")
+    print("    --fluxus (-f) : Installs fluxus instead of KRNL")
+    print("    --oxygen-u (-OU) : Installs oxygen u instead of KRNL\n")
+    print(f"{Fore.GREEN}Updater : ")
+    print("    --update-krnl (-uk) : Updates KRNL")
+    print("    --update-ou (-uo) : Updates Oxygen U")
+    print("    --update-fluxus (-uf) : Updates Fluxus")
+
+def GrapejuiceInstall():
+    if distro == "debian":
+        os.system("""
+            sudo apt update
+            sudo apt upgrade -y
+            sudo apt install -y curl
+            curl https://gitlab.com/brinkervii/grapejuice/-/raw/master/ci_scripts/signing_keys/public_key.gpg | sudo tee /usr/share/keyrings/grapejuice-archive-keyring.gpg > /dev/null
+            sudo tee /etc/apt/sources.list.d/grapejuice.list <<< 'deb [signed-by=/usr/share/keyrings/grapejuice-archive-keyring.gpg] https://brinkervii.gitlab.io/grapejuice/repositories/debian/ universal main' > /dev/null
+            sudo apt update
+            sudo apt install -y grapejuice
+        """)
+    elif distro == "arch":
+        os.system("""
+        sudo pacman -S base-devel
+        cd $HOME
+        git clone https://aur.archlinux.org/grapejuice-git.git
+        cd grapejuice-git
+        makepkg -si
+        """)
+    else:
+        print("We cant detect your current distro, to install grapejuice is recommended doing it from source")
+        print("Grapejuice Source Code : https://gitlab.com/brinkervii/grapejuice")
+if __name__ == '__main__':
+    for argument in sys.argv:
+        def GetFlag(text):
+            if argument == text:
+                return True
+            else:
+                return False
+        if GetFlag("--help") or GetFlag("-h"):
+            flagexecuted = True
+            Help()
+            sys.exit()
+        elif GetFlag("--test") or GetFlag("-test"):
+            flagexecuted = True
+            print("test")
+        elif GetFlag("--test2") or GetFlag("-test2"):
+            flagexecuted = True
+            print("test2")
+        elif GetFlag("--grapejuice-install") or GetFlag("-G"):
+            flagexecuted = True
+            GrapejuiceInstall()
+        elif GetFlag("--install-tkg") or GetFlag("-T"):
+            flagexecuted = True
+            os.system("""
+            cd /tmp
+            wget https://pastebin.com/raw/5SeVb005 -O install.py
+            python3 install.py  
+            """)
+        elif GetFlag("--krnl-install") or GetFlag("-ki"):
+            flagexecuted = True
+            if Path("$HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e").is_dir == False:
+                dainput = input(f"{Fore.RED} [:] {Fore.WHITE}You dont have the wine mouse patch, this will make krnl not work. Do u want to install the mouse patch? (Y/N) : ")
+                if re.search("Y",dainput) == True:
+                    os.system("""
+                        cd /tmp
+                        wget https://pastebin.com/raw/5SeVb005 -O install.py
+                        python3 install.py  
+                    """)
+                elif re.search("N",dainput) == True:
+                    print("")
+                else:
+                    os.system("""
+                        cd /tmp
+                        wget https://pastebin.com/raw/5SeVb005 -O install.py
+                        python3 install.py  
+                    """)
+            print(f"{Fore.GREEN} [+] {Fore.WHITE}Making Directories")
+            os.system("""
+            cd $HOME
+            mkdir KRNL
+            cd KRNL
+            mkdir autoexec
+            mkdir workspace
+            mkdir bin""")
+            print(f"{Fore.GREEN} [+] {Fore.WHITE}Making KRNL File")
+            os.system("""
+            touch krnl
+            chmod +x krnl
+            echo '
+            if [[ -z "${PREFIX}" ]]; then
+            echo "What is your PLAYER wineprefix name?"
+            echo 'To make KRNL not ask this everytime you execute it, add to your bashrc export PREFIX="WINEPREFIX_NAME"'
+            read PREFIX
+            fi
+            echo "WARNING : If you have any error/question just call SimplyDeveloper"
+            export WINEPREFIXPATH="$HOME/.local/share/grapejuice/prefixes/${PREFIX}"
+            export WINEPREFIX=$WINEPREFIXPATH 
+            export WINEARCH="win64" 
+            export WINEDEBUG="-all" 
+            export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" 
+            echo "[#] Executing Console..." 
+            $HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine $HOME/KRNL/bin/CLI
+            ' > krnl""")
+            print(f"{Fore.GREEN} [+] {Fore.WHITE}Downloading Dependencies")
+            os.system("""
+            DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
+            wget -q https://k-storage.com/bootstrapper/files/krnl.dll -O $HOME/KRNL/krnl.dll
+            wget -q $DOWNLOAD -O $HOME/KRNL/bin/CLI
+            """)
+            print(f"{Fore.MAGENTA} [:] {Fore.WHITE}KRNL Downloaded")
+        elif GetFlag("--update-krnl") or GetFlag("-uk"):
+            flagexecuted = True
+            print(f"{Fore.GREEN} [+] {Fore.WHITE}Downloading Dependencies")
+            if Path("$HOME/KRNL").is_dir() == True:
+                os.system("""
+                DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
+                wget -q https://k-storage.com/bootstrapper/files/krnl.dll -O $HOME/KRNL/krnl.dll
+                wget -q $DOWNLOAD -O $HOME/KRNL/bin/CLI
+                """)
+            else:
+                print("KRNL Is not downloaded")
+        else:
+            if flagexecuted == False:
+                try:
+                    lol = sys.argv[1]
+                except:
+                    Help()
+        
+            
+# Changing KRNL Linux to python because python > bash
+#!/usr/lib/python-exec/python3.9/python3
+# -*- coding: utf-8 -*-
