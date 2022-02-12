@@ -37,8 +37,7 @@ if getpass.getuser() == "root":
     sys.exit()
 
 def Help():
-    print(f"KRNL Linux Help\n")
-    print(f"{Fore.WHITE}Misc : ")
+    print(f"{Fore.WHITE}Main : ")
     print("    --install-krnl (-ik) : Installs KRNL")
     print("    --help (-h) : Displays this list\n")
     print(f"{Fore.MAGENTA}Grapejuice : ")
@@ -46,16 +45,16 @@ def Help():
     print("    --install-tkg (-T) : Installs the patched mouse wine for grapejuice\n")
     print(f"{Fore.RED}Troubleshooting : ")
     print("    --delete-krnl : Removes KRNL")
-    print("    --delete-ou : Deletes Oxygen U (NOT ACTIVE)")
-    print("    --delete-fluxus : Deletes fluxus (NOT ACTIVE)")
+    print("    --delete-ou : Deletes Oxygen U (TODO) (ONLY ACTIVE IF KRNL IS PATCHED)")
+    print("    --delete-fluxus : Deletes fluxus (TODO) (ONLY ACTIVE IF KRNL IS PATCHED)")
     print("    --download-autoexec : Downloads the internal gui\n")
     print(f"{Fore.CYAN}Other Exploits : ")
-    print("    --install-fluxus (-f) : Installs fluxus instead of KRNL (NOT ACTIVE)")
-    print("    --install-oxygenu (-OU) : Installs oxygen u instead of KRNL (NOT ACTIVE)\n")
+    print("    --install-fluxus (-f) : Installs fluxus instead of KRNL (TODO) (ONLY ACTIVE IF KRNL IS PATCHED)")
+    print("    --install-oxygenu (-OU) : Installs oxygen u instead of KRNL (TODO) (ONLY ACTIVE IF KRNL IS PATCHED)\n")
     print(f"{Fore.GREEN}Updater : ")
     print("    --update-krnl (-uk) : Updates KRNL")
-    print("    --update-ou (-uo) : Updates Oxygen U (NOT ACTIVE)")
-    print("    --update-fluxus (-uf) : Updates Fluxus (NOT ACTIVE)")
+    print("    --update-ou (-uo) : Updates Oxygen U (ONLY ACTIVE IF KRNL IS PATCHED)")
+    print("    --update-fluxus (-uf) : Updates Fluxus (ONLY ACTIVE IF KRNL IS PATCHED)")
 
 def GrapejuiceInstall():
     if distro == "debian":
