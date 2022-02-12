@@ -1,4 +1,5 @@
 **Note:** This was not made by any KRNL Developer this was made by SimplyDeveloper, too this will have a GUI soon
+**Note:** If you find any error please make a issue in the issues page, if u want anything new make a pull request
 # Requirements
 Python3 
 
