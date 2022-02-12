@@ -5,16 +5,9 @@ Python3
 
 Bash
 ## How to install
-To install execute `cd /tmp && wget https://raw.githubusercontent.com/SimpIyDeveIoper/KRNL_Linux/main/Bootstrapper -O Bootstrapper`
+To install execute `cd /tmp && wget https://raw.githubusercontent.com/SimpIyDeveIoper/KRNL_Linux/main/Bootstrapper -O Bootstrapper.py`
 
-Then execute which python3, add the next text to the start of Bootstrapper and you can execute it using ./Bootstrapper
-
-`#!WHICH PYTHON3 OUTPUT HERE, RETARDEDS`
-
-
-OR
-
-You can just use python3 ./Bootstrapper
+And then use python3 ./Bootstrapper.py
 
 Flag to install krnl : --install-krnl
 
