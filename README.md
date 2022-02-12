@@ -47,3 +47,5 @@ If you already installed to execute use `bash $HOME/KRNL/run.sh` or use the comm
 Changed to python and added more flags
 
 Some flags wont work because i did not add them
+
+When i install windows to get visual studio and then delete it im going to make a GUI version and another version without gui, i know i already have a version without gui but its not that good
