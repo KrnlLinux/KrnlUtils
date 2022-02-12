@@ -1,12 +1,21 @@
 **Note:** This was not made by any KRNL Developer this was made by SimplyDeveloper, too this will have a GUI soon
 # Requirements
-Python3 and Bash
+Python3 
+
+Bash
 ## How to install
 To install execute `cd /tmp && wget https://raw.githubusercontent.com/SimpIyDeveIoper/KRNL_Linux/main/Bootstrapper -O Bootstrapper`
+
 Then execute which python3, add the next text to the start of Bootstrapper and you can execute it using ./Bootstrapper
+
 `#!WHICH PYTHON3 OUTPUT HERE, RETARDEDS`
+
+
+OR
+
+You can just use python3 ./Bootstrapper
 ## How to update
-WARNING : THIS WILL ONLY WORK WITH THE OLD BOOTSTRAPPER
+WARNING : THIS WILL ONLY WORK WITH THE OLD BOOTSTRAPPER FOR THE NEW ONE USE --update-krnl FLAG
 To update KRNL execute `bash $HOME/KRNL/update.sh`
 
 This will install the latest version of the KRNL console and the KRNL.dll
@@ -21,4 +30,5 @@ If you already installed to execute use `bash $HOME/KRNL/run.sh` or use the comm
 
 ## New Updates and notes
 Changed to python and added more flags
-Some flags wont work in help because i did not add them
+
+Some flags wont work because i did not add them
