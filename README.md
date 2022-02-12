@@ -14,11 +14,26 @@ Then execute which python3, add the next text to the start of Bootstrapper and y
 OR
 
 You can just use python3 ./Bootstrapper
+
+Flag to install krnl : --install-krnl
+
+Flag to delete krnl : --delete-krnl
+
+## How to use
+To get help execute the bootstrapper with nothing or the --help flag
+
+To use scripts you can add any script you want into autoexec and if you go to your game and press Insert an internal gui will open, to close it use Insert
 ## How to update
 WARNING : THIS WILL ONLY WORK WITH THE OLD BOOTSTRAPPER FOR THE NEW ONE USE --update-krnl FLAG
 To update KRNL execute `bash $HOME/KRNL/update.sh`
 
 This will install the latest version of the KRNL console and the KRNL.dll
+## Add KRNL to path
+If you want to use one command in the new bootstrapper to start KRNL use the next command
+
+`cd /bin && sudo ln -s $HOME/KRNL/krnl krnl`
+
+After executing that to execute krnl use the command "krnl"
 ## How to run
 WARNING : THIS WILL ONLY WORK WITH THE OLD BOOTSTRAPPER, TO RUN WITH THE NEW ONE EXECUTE $HOME/krnl/krnl VIA PUTTING THAT IN THE CONSOLE OR USING ANY FILE EXPLORER
 If you already installed to execute use `bash $HOME/KRNL/run.sh` or use the command `krnl`
