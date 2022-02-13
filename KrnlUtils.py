@@ -2,6 +2,7 @@ import os
 import getpass
 import sys
 import re
+import urllib.request
 import requests
 import subprocess
 from os.path import exists
@@ -11,6 +12,8 @@ arch = exists("/usr/bin/pacman")
 windows = exists("C:/Windows")
 flagexecuted = False
 forloopc = 0
+def curl(link):
+    return urllib.request.urlopen(link).read()
 def wget(link,path):
     r = requests.get(link, allow_redirects=True)
     open(path,'wb').write(r.content)
