@@ -6,6 +6,7 @@ from os.path import exists
 gentoo = exists("/usr/bin/emerge")
 debian = exists("/usr/bin/apt")
 arch = exists("/usr/bin/pacman")
+windows = exists("C:/Windows")
 flagexecuted = False
 forloopc = 0
 def bash(text):
@@ -18,6 +19,8 @@ def GetDistro():
         return "debian"
     if arch == True:
         return "arch"
+    if windows == True:
+        return "windows"
     if arch == False and gentoo == False and debian == False:
         return "idk"
 distro = GetDistro()
