@@ -2,6 +2,8 @@ import os
 import getpass
 import sys
 import re
+import requests
+import subprocess
 from os.path import exists
 gentoo = exists("/usr/bin/emerge")
 debian = exists("/usr/bin/apt")
@@ -9,8 +11,36 @@ arch = exists("/usr/bin/pacman")
 windows = exists("C:/Windows")
 flagexecuted = False
 forloopc = 0
-def bash(text):
-    os.system(text)
+def wget(link,path):
+    r = requests.get(link, allow_redirects=True)
+    open(path,'wb').write(r.content)
+def remove(path,sudo,isdir):
+    if isdir == "":
+        isdir = False
+    if sudo == "":
+        sudo = False
+    if sudo == False and isdir == False:
+        return os.popen(f"rm {path}").read()s
+    if sudo and isdir == False
+        return os.popen(f"sudo rm {path}").read()
+    if sudo == False and isdir:
+        return os.popen(f"rm -R {path}").read()
+    if sudo and isdir:
+        return os.popen(f"sudo rm -R {path}").read()
+def copy(path,path2,sudo,isdir):
+    if isdir == "":
+        isdir = False
+    if sudo == "":
+        sudo = False
+    if sudo == False and isdir == False:
+        return os.popen(f"cp {path} {path2}").read()s
+    if sudo and isdir == False
+        return os.popen(f"sudo cp {path} {path2}").read()
+    if sudo == False and isdir:
+        return os.popen(f"cp -R {path} {path2}").read()
+    if sudo and isdir:
+        return os.popen(f"sudo cp -R {path} {path2}").read()
+
 
 def GetDistro():
     if gentoo == True:
@@ -138,6 +168,7 @@ if __name__ == '__main__':
     for argument in sys.argv:
         def GetFlag(text):
             if argument == text:
+                flagexecuted = True
                 return True
             else:
                 return False
@@ -182,12 +213,6 @@ if __name__ == '__main__':
             else:
                 Error("Krnl is not linked")
                 DEBUG("exists(/bin/krnl) False")
-        elif GetFlag("--test") or GetFlag("-test"):
-            flagexecuted = True
-            print("test")
-        elif GetFlag("--test2") or GetFlag("-test2"):
-            flagexecuted = True
-            print("test2")
         elif GetFlag("--grapejuice-install") or GetFlag("-gi"):
             flagexecuted = True
             GrapejuiceInstall()
@@ -203,13 +228,11 @@ if __name__ == '__main__':
         elif GetFlag("--install-tkg") or GetFlag("-tkg"):
             flagexecuted = True
             if not TkgInstalled:
-                DEBUG("Downloading & running install.py (wget https://pastebin.com/raw/5SeVb005 -O install.py, python3 install.py > /dev/null)")
+                DEBUG("Function wget, Content https://pastebin.com/raw/5SeVb005, File /tmp/install.py")
                 Info("Downloading TKG")
-                os.system("""
-                cd /tmp
-                wget https://pastebin.com/raw/5SeVb005 -O install.py > /dev/null
-                python3 install.py > /dev/null
-                """)
+                wget("https://pastebin.com/raw/5SeVb005", "/tmp/install.py")
+                os.system("python3 /tmp/install.py > /dev/null")
+                Info("Sucessfully downloaded TKG")
             else:
                 TKGQuestion= Question("TKG Is already installed, do you want to delete it and continue? (Y/N) : ")
                 if re.search("Y",TKGQuestion):
