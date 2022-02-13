@@ -3,6 +3,10 @@ import getpass
 import sys
 import re
 import urllib.request
+try:
+    import requests
+except ModuleNotFoundError:
+    os.system("pip3 install --user requests")
 import requests
 import subprocess
 from os.path import exists
@@ -23,8 +27,8 @@ def remove(path,sudo,isdir):
     if sudo == "":
         sudo = False
     if sudo == False and isdir == False:
-        return os.popen(f"rm {path}").read()s
-    if sudo and isdir == False
+        return os.popen(f"rm {path}").read()
+    if sudo and isdir == False:
         return os.popen(f"sudo rm {path}").read()
     if sudo == False and isdir:
         return os.popen(f"rm -R {path}").read()
@@ -36,8 +40,8 @@ def copy(path,path2,sudo,isdir):
     if sudo == "":
         sudo = False
     if sudo == False and isdir == False:
-        return os.popen(f"cp {path} {path2}").read()s
-    if sudo and isdir == False
+        return os.popen(f"cp {path} {path2}").read()
+    if sudo and isdir == False:
         return os.popen(f"sudo cp {path} {path2}").read()
     if sudo == False and isdir:
         return os.popen(f"cp -R {path} {path2}").read()
@@ -171,6 +175,9 @@ if __name__ == '__main__':
     for argument in sys.argv:
         def GetFlag(text):
             if argument == text:
+                if windows:
+                    print("Dont try to do that again, it will probably give massive errors because your using windows")
+                    sys.exit()
                 flagexecuted = True
                 return True
             else:
