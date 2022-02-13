@@ -174,7 +174,7 @@ if __name__ == '__main__':
                     Error("Krnl already linked")
             else:
                 Error("Krnl is not installed")
-        elif GetFlag("--delete-krnl-path") or GetFlag("-dkp"):
+        elif GetFlag("--linux-delete-krnl-path") or GetFlag("-ldkp"):
             if LinkInstalled:
                 os.system(f"sudo unlink {LinkPath}")
                 DEBUG("Unlinked /bin/krnl (unlink /bin/krnl)")
