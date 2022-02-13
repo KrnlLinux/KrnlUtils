@@ -74,7 +74,7 @@ def Help():
     print("    Soon\n")
     print(f"{Fore.CYAN}Windows : ")
     print("    Soon\n")
-    print(f"{Fore.CYAN} About Messages :")
+    print(f"{Fore.CYAN}About Messages :")
     print(f"    {Fore.RED}[!]{Fore.WHITE} : Error")
     print(f"    {Fore.BLUE}[¡]{Fore.WHITE} : Info")
     print(f"    {Fore.YELLOW}[;]{Fore.WHITE} : Warning")
