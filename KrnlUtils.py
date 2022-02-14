@@ -62,7 +62,7 @@ def Process(text):
     print(f"{Fore.MAGENTA} [#] {Fore.WHITE} " + text)
 def DEBUG(text):
     if not exists(f"{HOME}/.krnltmp"):
-        mkdir(f"{HOME}/.krnltmp")
+        mkdir(f"{HOME}/.krnltmp",False)
     if not exists(f"{HOME}/.krnltmp/.debuglogs"):
         mkfile(f"{HOME}/.krnltmp/.debuglogs","[DEBUG LOGS BEGIN]")
     bash(f"echo '{text}' >> {HOME}/.krnltmp/.debuglogs")
@@ -89,7 +89,7 @@ def mkfile(path,content):
     DEBUG("Writef path."+path+" content."+content)
     with open(path, 'w') as f:
         f.write(content)
-def mkdir(path,sudo:False):
+def mkdir(path,sudo=False):
     if sudo == None or sudo == "":
         sudo = False
     DEBUG("Mkdirf path."+path+" sudo."+str(sudo))
@@ -101,7 +101,7 @@ def readfile(path):
     DEBUG("Readfilef path."+path)
     return bash(f"cat {path}")
 
-def remove(path,sudo:False,isdir:False):
+def remove(path,sudo=False,isdir=False):
     if isdir == "":
         isdir = False
     if sudo == "":
@@ -116,7 +116,7 @@ def remove(path,sudo:False,isdir:False):
     if sudo and isdir:
         return bash(f"sudo rm -R {path}")
 
-def copy(path,path2,sudo: False,isdir: False):
+def copy(path,path2,sudo= False,isdir= False):
     if isdir == "":
         isdir = False
     if sudo == "":
@@ -131,7 +131,7 @@ def copy(path,path2,sudo: False,isdir: False):
     if sudo and isdir:
         return bash(f"sudo cp -R {path} {path2} ")
 
-def bash(cmd,output: True):
+def bash(cmd,output= True):
     if output == false:
         cmd = cmd + " > /dev/null"
     pipe = subprocess.Popen(cmd,shell=true,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
