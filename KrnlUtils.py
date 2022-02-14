@@ -194,19 +194,11 @@ def GrapejuiceInstall():
         bash("sudo apt install -y grapejuice",false)
         Info("Done")
     elif distro == "arch":
-        DEBUG("/usr/bin/pacman Exists running arch installation for grapejuice")
         Process("Instaling Arch Grapejuice")
         DEBUG("Installing base-devel (pacman -S base-devel)")
-        bash("sudo pacman -S base-devel")
-        DEBUG("Cloning grapejuice repository (git clone https://aur.archlinux.org/grapejuice-git.git)")
-        os.system("""
-        cd $HOME
-        git clone https://aur.archlinux.org/grapejuice-git.git
-        cd grapejuice-git""")
-        DEBUG("Installing AUR Package (makepkg -si)")
-        os.system("""
-        makepkg -si
-        """)
+        bash("sudo pacman -S base-devel",false)
+        bash("cd $HOME && git clone https://aur.archlinux.org/grapejuice-git.git")
+        bash("cd $HOME/grapejuice-git && makepkg -si")
         Info("Done")
     else:
         DEBUG("Gentoo/Unknown Distro Detected, printing source code message")
@@ -218,7 +210,7 @@ if __name__ == '__main__':
         def GetFlag(text):
             if argument == text:
                 if windows:
-                    print("Dont try to do that again, it will probably give massive errors because your using windows")
+                    print("Executing any flag with windows will give massive errors")
                     sys.exit()
                 flagexecuted = True
                 return True
@@ -247,11 +239,8 @@ if __name__ == '__main__':
         elif GetFlag("--linux-add-krnl-path") or GetFlag("-lakp"):
             if RunInstalled:
                 if not LinkInstalled:
-                    os.system(f"""
-                    cd /bin
-                    sudo ln -s {RunPath} krnl
-                    """)
-                    DEBUG(f"Linked {HOME}/KRNL/krnl to /bin/krnl (ln -s {HOME}/KRNL/krnl /bin/krnl)")
+                    bash(f"cd /bin && sudo ln -s {RunPath} krnl")
+                    DEBUG(f"Linked {HOME}/KRNL/krnl to /bin/krnl")
                     Info("Done")
                 else:
                     Error("Krnl already linked")
