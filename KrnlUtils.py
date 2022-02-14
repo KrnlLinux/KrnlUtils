@@ -4,6 +4,7 @@ nil = None
 null = None
 
 
+
 import os
 import getpass
 import sys
@@ -31,6 +32,16 @@ if getpass.getuser() == "root":
 
     sys.exit()
 
+HOME = f"/home/{getpass.getuser()}"
+KrnlInstalled =exists(f"{HOME}/KRNL")
+RunInstalled = exists(f"{HOME}/KRNL/krnl")
+TkgInstalled=exists(f"{HOME}/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine")
+LinkInstalled=exists("/bin/krnl")
+KrnlPath=f"{HOME}/KRNL"
+RunPath=f"{KrnlPath}/krnl"
+TkgPath=f"{HOME}/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine"
+LinkPath=f"/bin/krnl"
+
 quiet = False
 def Error(text):
     print(f"{Fore.RED} [!] {Fore.WHITE}Error : " + text)
@@ -41,6 +52,11 @@ def Warning(text):
 def Process(text):
     print(f"{Fore.MAGENTA} [#] {Fore.WHITE} " + text)
 def DEBUG(text):
+    if not exists(f"{HOME}/.krnltmp"):
+        mkdir(f"{HOME}/.krnltmp")
+    if not exists(f"{HOME}/.krnltmp/.debuglogs"):
+        mkfile(f"{HOME}/.krnltmp/.debuglogs","[DEBUG LOGS BEGIN]")
+    bash(f"echo '{text}' >> {HOME}/.krnltmp/.debuglogs")
     if quiet == True:
         return "Quiet Mode"
     print(f"{Fore.GREEN} [DEBUG] {Fore.WHITE} " + text)
@@ -83,13 +99,19 @@ def remove(path,sudo,isdir):
         sudo = False
     DEBUG("Removef path."+path+" sudo."+str(sudo)+" isdir."+str(isdir))
     if sudo == False and isdir == False:
-        return os.popen(f"rm {path}").read()
+        CommandExecution = os.popen(f"rm {path}").read()
     if sudo and isdir == False:
-        return os.popen(f"sudo rm {path}").read()
+        CommandExecution = os.popen(f"sudo rm {path}").read()
     if sudo == False and isdir:
-        return os.popen(f"rm -R {path}").read()
+        CommandExecution = os.popen(f"rm -R {path}").read()
     if sudo and isdir:
-        return os.popen(f"sudo rm -R {path}").read()
+        CommandExecution = os.popen(f"sudo rm -R {path}").read()
+    if re.search("error",CommandExecution.lower()):
+        Error("An error ocurred while executing copy")
+        DEBUG(CommandExecution)
+        
+        sys.exit()
+    return CommandExecution
 def copy(path,path2,sudo,isdir):
     if isdir == "":
         isdir = False
@@ -97,19 +119,25 @@ def copy(path,path2,sudo,isdir):
         sudo = False
     DEBUG("Copyf frompath."+path+" topath."+path2+" sudo."+str(sudo)+" isdir."+str(isdir))
     if sudo == False and isdir == False:
-        return os.popen(f"cp {path} {path2}").read()
+        return bash(f"cp {path} {path2}")
+
     if sudo and isdir == False:
-        return os.popen(f"sudo cp {path} {path2}").read()
+        return bash(f"sudo cp {path} {path2}")
     if sudo == False and isdir:
-        return os.popen(f"cp -R {path} {path2}").read()
+        return bash(f"cp -R {path} {path2}")
     if sudo and isdir:
-        return os.popen(f"sudo cp -R {path} {path2}").read()
+        return bash(f"sudo cp -R {path} {path2} ")
+
 def bash(cmd,output):
-    DEBUG("Bashf cmd."+cmd)
     if output == false:
-        return os.popen(cmd + " > /dev/null")
-    else:
-        return os.popen(cmd).read()
+        cmd = cmd + " > /dev/null"
+    pipe = subprocess.Popen(cmd,shell=true,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    res = pipe.communicate()
+    if not pipe.returncode == 0:
+        Error("An error ocurred")
+        DEBUG(res)
+        sys.exit()
+    return pipe.stdout
 
 def GetDistro():
     if gentoo == True:
@@ -154,25 +182,14 @@ def Help():
 
 def GrapejuiceInstall():
     if distro == "debian":
-        DEBUG("/usr/bin/apt Exists running debian installation for grapejuice")
         Process("Installing Debian Grapejuice")
-        DEBUG("Updating & Upgrading (apt update, apt upgrade)")
-        os.system("""
-            sudo apt update > /dev/null
-            sudo apt upgrade -y > /dev/null""")
-        DEBUG("Installing Curl (apt install curl)")
-        os.system(""""
-            sudo apt install -y curl > /dev/null""")
-        DEBUG("Downloading the keyrings (curl CONTENT_TOO_LONG | tee CONTENT_TOO_LONG)")
-        os.system("""
-            curl https://gitlab.com/brinkervii/grapejuice/-/raw/master/ci_scripts/signing_keys/public_key.gpg | sudo tee /usr/share/keyrings/grapejuice-archive-keyring.gpg > /dev/null
-            sudo tee /etc/apt/sources.list.d/grapejuice.list <<< 'deb [signed-by=/usr/share/keyrings/grapejuice-archive-keyring.gpg] https://brinkervii.gitlab.io/grapejuice/repositories/debian/ universal main' > /dev/null
-            """)
-        DEBUG("Updating and installing grapejuice (apt update, apt install grapejuice)")
-        os.system("""
-            sudo apt update > /dev/null
-            sudo apt install -y grapejuice > /dev/null
-        """)
+        bash("sudo apt update",false)
+        bash("sudo apt upgrade -y",false)
+        bash("sudo apt install -y curl",false)
+        bash("curl https://gitlab.com/brinkervii/grapejuice/-/raw/master/ci_scripts/signing_keys/public_key.gpg | sudo tee /usr/share/keyrings/grapejuice-archive-keyring.gpg",false)
+        bash("sudo tee /etc/apt/sources.list.d/grapejuice.list <<< 'deb [signed-by=/usr/share/keyrings/grapejuice-archive-keyring.gpg] https://brinkervii.gitlab.io/grapejuice/repositories/debian/ universal main'",false)
+        bash("sudo apt update",false)
+        bash("sudo apt install -y grapejuice",false)
         Info("Done")
     elif distro == "arch":
         DEBUG("/usr/bin/pacman Exists running arch installation for grapejuice")
@@ -195,15 +212,6 @@ def GrapejuiceInstall():
         print("We cant detect your current distro, to install grapejuice is recommended doing it from source")
         print("Grapejuice Source Code : https://gitlab.com/brinkervii/grapejuice")
 
-HOME = f"/home/{getpass.getuser()}"
-KrnlInstalled =exists(f"{HOME}/KRNL")
-RunInstalled = exists(f"{HOME}/KRNL/krnl")
-TkgInstalled=exists(f"{HOME}/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine")
-LinkInstalled=exists("/bin/krnl")
-KrnlPath=f"{HOME}/KRNL"
-RunPath=f"{KrnlPath}/krnl"
-TkgPath=f"{HOME}/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine"
-LinkPath=f"/bin/krnl"
 if __name__ == '__main__':
     for argument in sys.argv:
         def GetFlag(text):
