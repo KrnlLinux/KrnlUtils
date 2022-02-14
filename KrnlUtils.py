@@ -5,6 +5,7 @@ null = None
 
 
 
+from distutils.file_util import write_file
 import os
 import getpass
 try:
@@ -153,7 +154,7 @@ def GetDistro():
     if arch == False and gentoo == False and debian == False:
         return "idk"
 distro = GetDistro()
-
+# KRNL for linux
 def Help():
     print(f"{Fore.WHITE}Main : ")
     print("    --help (-h) : Displays this list")
@@ -163,13 +164,12 @@ def Help():
     print("    --install-tkg (-tkg) : Installs the patched mouse wine for grapejuice\n")
     print(f"{Fore.CYAN}Linux KRNL : ")
     print("    --linux-install-krnl (-lik) : Installs KRNL")
+    print("    --linux-krnl-attach (-lka) : The name says it all")
+    print("    --linux-krnl-execute [ARG] (-lke) : Executes a script using KRNL (WARNING : ONLY 1 ARGUMENT SO ITS RECOMMENDED USING LOADSTRING)")
     print("    --linux-delete-krnl (-ldk) : Removes KRNL")
     print("    --linux-download-autoexec (-lda) : Downloads the internal gui")
-    print("    --linux-add-krnl-path (-lakp) : Adds KRNL to path so that you can execute it using the command krnl")
     print("    --linux-set-prefix [ARG] (-lsp) : Set the variable PREFIX everytime you use a console (People that installed KRNL will understand what this does)")
-    print("    --linux-delete-krnl-path (-ldkp) : Unlinks /bin/krnl if it exists")
     print("    --linux-beta-gui-build-install (-lbgbi) : Instead of using the console uses a GUI (TODO)")
-    print("    --linux-update-krnl (-luk) : Updates KRNL\n")
     print(f"{Fore.CYAN}MacOS KRNL : ")
     print("    Soon\n")
     print(f"{Fore.CYAN}Windows : ")
@@ -181,7 +181,11 @@ def Help():
     print(f"    {Fore.MAGENTA}[#]{Fore.WHITE} : Process/Downloading/Loading")
     print(f"    {Fore.LIGHTMAGENTA_EX}[:]{Fore.WHITE} : Question")
     print(f"    {Fore.GREEN}[DEBUG]{Fore.WHITE} : Debug Messages (Disable with --quiet)")
+    
 
+KrnlApiDownload = curl("https://pastebin.com/raw/JKeXKjLf")
+KrnlExecutorDownload = curl("https://pastebin.com/raw/gcH1DTED")
+KrnlAttacherDownload = curl("https://pastebin.com/raw/bU36nsCE")
 def GrapejuiceInstall():
     if distro == "debian":
         Process("Installing Debian Grapejuice")
@@ -204,7 +208,7 @@ def GrapejuiceInstall():
         DEBUG("Gentoo/Unknown Distro Detected, printing source code message")
         print("We cant detect your current distro, to install grapejuice is recommended doing it from source")
         print("Grapejuice Source Code : https://gitlab.com/brinkervii/grapejuice")
-
+# Now i need to rewrite all the fucking code
 if __name__ == '__main__':
     for argument in sys.argv:
         def GetFlag(text):
@@ -223,6 +227,22 @@ if __name__ == '__main__':
             flagexecuted = True
             Help()
             sys.exit()
+        elif GetFlag("--linux-krnl-attach") or GetFlag("-lka"):
+            if exists(KrnlPath) == False:
+                Error("KRNL Not installed")
+                sys.exit()
+            if exists(TkgPath) == False:
+                Error("TKG-Binary mouse patch not installed")
+                sys.exit()
+            bash("sh attach.sh")
+        elif GetFlag("--linux-krnl-execute") or GetFlag("-lke"):
+            if exists(KrnlPath) == False:
+                Error("KRNL Not installed")
+                sys.exit()
+            if exists(TkgPath) == False:
+                Error("TKG-Binary mouse patch not installed")
+                sys.exit()
+            bash(f"sh execute.sh {sys.argv[2]}")
         elif GetFlag("--linux-set-prefix") or GetFlag("-lsp"):
             if RunInstalled:
                 try:
@@ -236,24 +256,6 @@ if __name__ == '__main__':
                     Error("No argument given")
             else:
                 Error("KRNL Is not installed")
-        elif GetFlag("--linux-add-krnl-path") or GetFlag("-lakp"):
-            if RunInstalled:
-                if not LinkInstalled:
-                    bash(f"cd /bin && sudo ln -s {RunPath} krnl")
-                    DEBUG(f"Linked {HOME}/KRNL/krnl to /bin/krnl")
-                    Info("Done")
-                else:
-                    Error("Krnl already linked")
-            else:
-                Error("Krnl is not installed")
-        elif GetFlag("--linux-delete-krnl-path") or GetFlag("-ldkp"):
-            if LinkInstalled:
-                os.system(f"sudo unlink {LinkPath}")
-                DEBUG("Unlinked /bin/krnl (unlink /bin/krnl)")
-                Info("Done")
-            else:
-                Error("Krnl is not linked")
-                DEBUG("exists(/bin/krnl) False")
         elif GetFlag("--grapejuice-install") or GetFlag("-gi"):
             flagexecuted = True
             GrapejuiceInstall()
@@ -329,27 +331,15 @@ if __name__ == '__main__':
                     wget("https://pastebin.com/raw/5SeVb005", "/tmp/install.py")
                     bash("python3 /tmp/install.py",false)
                     Info("Sucessfully downloaded TKG")
-            DEBUG("Function os.system (Bash), cd $HOME && mkdir KRNL && cd KRNL")
-            Info("Making Files")
-            os.system("""
-            cd $HOME
-            mkdir KRNL
-            cd KRNL""")
-            DEBUG("Function os.system (Bash), cd $HOME/KRNL && mkdir autoexec && mkdir workspace && mkdir bin")
-            os.system("""""
-            cd $HOME/KRNL
-            mkdir autoexec
-            mkdir workspace
-            mkdir bin""")
-            DEBUG("Function os.system (Bash), cd $HOME/KRNL && touch krnl && chmod +x krnl && content.long")
-            os.system("""
-            cd $HOME/KRNL
-            touch krnl
-            chmod +x krnl
-            echo '
+            mkdir("$HOME/KRNL")
+            mkdir("$HOME/KRNL/autoexec")
+            mkdir("$HOME/KRNL/workspace")
+            mkdir("$HOME/KRNL/bin")
+            mkfile("")
+            mkfile(f"{KrnlPath}/attach.sh","""
             if [[ -z "${PREFIX}" ]]; then
             echo "What is your PLAYER wineprefix name?"
-            echo 'To make KRNL not ask this everytime you execute it, add to your bashrc export PREFIX="WINEPREFIX_NAME"'
+            echo 'To make KRNL not ask this everytime you execute it, use --linux-set-prefix [PREFIXNAME]
             read PREFIX
             fi
             echo "WARNING : If you have any error/question just call SimplyDeveloper"
@@ -358,22 +348,30 @@ if __name__ == '__main__':
             export WINEARCH="win64" 
             export WINEDEBUG="-all" 
             export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" 
-            echo "[#] Executing Console..." 
-            $HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine $HOME/KRNL/bin/CLI
-            ' > krnl""")
-            DEBUG(f"Function os.system (Bash), cd krnldir/autoexec, touch InternalGui.txt, content.too.long")
-            Info("Downloading Dependencies")
-
-            os.system("""
-            cd $HOME/KRNL
-            cd autoexec
-            touch InternalGui.txt
-            echo "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()" > InternalGui.txt
-            cd $HOME/KRNL
-            DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
-            wget https://k-storage.com/bootstrapper/files/krnl.dll -O $HOME/KRNL/krnl.dll > /dev/null
-            wget $DOWNLOAD -O $HOME/KRNL/bin/CLI > /dev/null
+            echo "[#] Executing Attacher..." 
+            $HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine $HOME/KRNL/attach     
             """)
+            mkfile(f"{KrnlPath}/execute.sh","""
+            if [[ -z "${PREFIX}" ]]; then
+            echo "What is your PLAYER wineprefix name?"
+            echo 'To make KRNL not ask this everytime you execute it, use --linux-set-prefix [PREFIXNAME]
+            read PREFIX
+            fi
+            echo "WARNING : If you have any error/question just call SimplyDeveloper"
+            export WINEPREFIXPATH="$HOME/.local/share/grapejuice/prefixes/${PREFIX}"
+            export WINEPREFIX=$WINEPREFIXPATH 
+            export WINEARCH="win64" 
+            export WINEDEBUG="-all" 
+            export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" 
+            echo "[#] Executing Attacher..." 
+            $HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine $HOME/KRNL/execute $@     
+            """)
+
+            bash("touch $HOME/KRNL/autoexec/InternalGui.txt")
+            mkfile(f"{KrnlPath}/autoexec/InternalGui.txt","loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()")
+            wget(KrnlApiDownload, "$HOME/KRNL/KrnlAPI.dll")
+            wget(KrnlAttacherDownload, "$HOME/KRNL/attach")
+            wget(KrnlExecutorDownload, "$HOME/KRNL/execute")
             Info("KRNL Sucessfully downloaded")
         elif GetFlag("--linux-download-autoexec") or GetFlag("-lda"):
             flagexecuted = True
@@ -400,19 +398,6 @@ if __name__ == '__main__':
             else:
                 DEBUG(f"exists({HOME}/KRNL) False")
                 Error("Krnl not installed")
-        elif GetFlag("--linux-update-krnl") or GetFlag("-luk"):
-            flagexecuted = True
-            print(f"{Fore.GREEN} [+] {Fore.WHITE}Downloading Dependencies")
-            if exists(f"{HOME}/KRNL/") == True:
-                os.system("""
-                DOWNLOAD="$(curl https://pastebin.com/raw/gcH1DTED)"
-                wget -q https://k-storage.com/bootstrapper/files/krnl.dll -O $HOME/KRNL/krnl.dll > /dev/null
-                wget -q $DOWNLOAD -O $HOME/KRNL/bin/CLI > /dev/null
-                """)
-                Info("Sucesfully updated krnl")
-            else:
-                DEBUG(f"exists({HOME}/KRNL) False")
-                Error("Krnl is not downloaded")
         else:
             if flagexecuted == False:
                 try:
