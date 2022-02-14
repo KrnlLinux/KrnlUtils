@@ -367,7 +367,6 @@ if __name__ == '__main__':
             $HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine $HOME/KRNL/execute $@     
             """)
 
-            bash("touch $HOME/KRNL/autoexec/InternalGui.txt")
             mkfile(f"{KrnlPath}/autoexec/InternalGui.txt","loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()")
             wget(KrnlApiDownload, "$HOME/KRNL/KrnlAPI.dll")
             wget(KrnlAttacherDownload, "$HOME/KRNL/attach")
@@ -376,23 +375,7 @@ if __name__ == '__main__':
         elif GetFlag("--linux-download-autoexec") or GetFlag("-lda"):
             flagexecuted = True
             if exists(f"{HOME}/KRNL")():
-                if exists(f"/home/{getpass.getuser()}/KRNL/autoexec/1.txt")():
-                    DEBUG(f"Downloading InternalGui (echo CONTENT_TOO_LONG > InternalGui.txt)")
-                    os.system("""
-                    cd $HOME/KRNL
-                    cd autoexec
-                    echo "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()" > InternalGui.txt
-                    cd $HOME/KRNL
-                    """)
-                else:
-                    DEBUG(f"Downloading InternalGui (touch InternalGui.txt, echo CONTENT_TOO_LONG > InternalGui.txt)")
-                    os.system("""
-                    cd $HOME/KRNL
-                    cd autoexec
-                    touch InternalGui.txt
-                    echo "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()" > InternalGui.txt
-                    cd $HOME/KRNL
-                    """)
+                mkfile(f"{KrnlPath}/autoexec/InternalGui.txt","loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()")
                 Info("Done")
                 DEBUG("Writing Ended")
             else:
