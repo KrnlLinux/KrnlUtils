@@ -13,7 +13,8 @@ try:
 except ModuleNotFoundError:
     os.system("pip3 install --user gitpython")
 import git
-from git import repo
+from git import Repo
+
 import sys
 import re
 import urllib.request
