@@ -1,3 +1,9 @@
+true = True
+false = False
+nil = None
+null = None
+
+
 import os
 import getpass
 import sys
@@ -10,57 +16,7 @@ except ModuleNotFoundError:
 import requests
 import subprocess
 from os.path import exists
-gentoo = exists("/usr/bin/emerge")
-debian = exists("/usr/bin/apt")
-arch = exists("/usr/bin/pacman")
-windows = exists("C:/Windows")
-flagexecuted = False
-forloopc = 0
-def curl(link):
-    return urllib.request.urlopen(link).read()
-def wget(link,path):
-    r = requests.get(link, allow_redirects=True)
-    open(path,'wb').write(r.content)
-def remove(path,sudo,isdir):
-    if isdir == "":
-        isdir = False
-    if sudo == "":
-        sudo = False
-    if sudo == False and isdir == False:
-        return os.popen(f"rm {path}").read()
-    if sudo and isdir == False:
-        return os.popen(f"sudo rm {path}").read()
-    if sudo == False and isdir:
-        return os.popen(f"rm -R {path}").read()
-    if sudo and isdir:
-        return os.popen(f"sudo rm -R {path}").read()
-def copy(path,path2,sudo,isdir):
-    if isdir == "":
-        isdir = False
-    if sudo == "":
-        sudo = False
-    if sudo == False and isdir == False:
-        return os.popen(f"cp {path} {path2}").read()
-    if sudo and isdir == False:
-        return os.popen(f"sudo cp {path} {path2}").read()
-    if sudo == False and isdir:
-        return os.popen(f"cp -R {path} {path2}").read()
-    if sudo and isdir:
-        return os.popen(f"sudo cp -R {path} {path2}").read()
 
-
-def GetDistro():
-    if gentoo == True:
-        return "gentoo"
-    if debian == True:
-        return "debian"
-    if arch == True:
-        return "arch"
-    if windows == True:
-        return "windows"
-    if arch == False and gentoo == False and debian == False:
-        return "idk"
-distro = GetDistro()
 try:
     import colorama
     from colorama import Fore, Back, Style
@@ -91,6 +47,83 @@ def DEBUG(text):
 def Question(text):
     sus = input(f"{Fore.LIGHTMAGENTA_EX} [:] {Fore.WHITE} " + text)
     return sus
+
+gentoo = exists("/usr/bin/emerge")
+debian = exists("/usr/bin/apt")
+arch = exists("/usr/bin/pacman")
+windows = exists("C:/Windows")
+flagexecuted = False
+forloopc = 0
+def curl(link):
+    return urllib.request.urlopen(link).read()
+def wget(link,path):
+    r = requests.get(link, allow_redirects=True)
+    DEBUG("Downloadf url."+link+" path."+path)
+    open(path,'wb').write(r.content)
+def mkfile(path,content):
+    DEBUG("Writef path."+path+" content."+content)
+    with open(path, 'w') as f:
+        f.write(content)
+def mkdir(path,sudo):
+    if sudo == None or sudo == "":
+        sudo = False
+    DEBUG("Mkdirf path."+path+" sudo."+str(sudo))
+    if sudo == True:
+        os.system(f"sudo mkdir {path}")
+    else:
+        os.system(f"mkdir {path}")
+def readfile(path):
+    DEBUG("Readfilef path."+path)
+    return os.popen(f"cat {path}").read()
+
+def remove(path,sudo,isdir):
+    if isdir == "":
+        isdir = False
+    if sudo == "":
+        sudo = False
+    DEBUG("Removef path."+path+" sudo."+str(sudo)+" isdir."+str(isdir))
+    if sudo == False and isdir == False:
+        return os.popen(f"rm {path}").read()
+    if sudo and isdir == False:
+        return os.popen(f"sudo rm {path}").read()
+    if sudo == False and isdir:
+        return os.popen(f"rm -R {path}").read()
+    if sudo and isdir:
+        return os.popen(f"sudo rm -R {path}").read()
+def copy(path,path2,sudo,isdir):
+    if isdir == "":
+        isdir = False
+    if sudo == "":
+        sudo = False
+    DEBUG("Copyf frompath."+path+" topath."+path2+" sudo."+str(sudo)+" isdir."+str(isdir))
+    if sudo == False and isdir == False:
+        return os.popen(f"cp {path} {path2}").read()
+    if sudo and isdir == False:
+        return os.popen(f"sudo cp {path} {path2}").read()
+    if sudo == False and isdir:
+        return os.popen(f"cp -R {path} {path2}").read()
+    if sudo and isdir:
+        return os.popen(f"sudo cp -R {path} {path2}").read()
+def bash(cmd,output):
+    DEBUG("Bashf cmd."+cmd)
+    if output == false:
+        return os.popen(cmd + " > /dev/null")
+    else:
+        return os.popen(cmd).read()
+
+def GetDistro():
+    if gentoo == True:
+        return "gentoo"
+    if debian == True:
+        return "debian"
+    if arch == True:
+        return "arch"
+    if windows == True:
+        return "windows"
+    if arch == False and gentoo == False and debian == False:
+        return "idk"
+distro = GetDistro()
+
 def Help():
     print(f"{Fore.WHITE}Main : ")
     print("    --help (-h) : Displays this list")
@@ -229,6 +262,7 @@ if __name__ == '__main__':
         elif GetFlag("--linux-delete-krnl") or GetFlag("-ldk"):
             flagexecuted = True
             if KrnlInstalled:
+                remove(f"{KrnlPath}",False,True)
                 os.system(f"""
                 rm -R {KrnlPath}
                 """)
@@ -246,14 +280,11 @@ if __name__ == '__main__':
             else:
                 TKGQuestion= Question("TKG Is already installed, do you want to delete it and continue? (Y/N) : ")
                 if re.search("Y",TKGQuestion):
-                    os.system(f"rm -R {TkgPath}")
-                    DEBUG("Downloading & running install.py (wget https://pastebin.com/raw/5SeVb005 -O install.py, python3 install.py > /dev/null)")
+                    remove(f"{TkgPath}",False,True)
+                    DEBUG("Function wget, Content https://pastebin.com/raw/5SeVb005, File /tmp/install.py")
                     Info("Downloading TKG")
-                    os.system("""
-                    cd /tmp
-                    wget https://pastebin.com/raw/5SeVb005 -O install.py > /dev/null
-                    python3 install.py > /dev/null
-                    """)
+                    wget("https://pastebin.com/raw/5SeVb005","/tmp/install.py")
+                    os.system("python3 /tmp/install.py > /dev/null")
                     Info("Sucessfully downloaded TKG")
                 else:
                     Info("Okay, TKG Will not be deleted or installed")
@@ -265,78 +296,54 @@ if __name__ == '__main__':
                 if re.search("Y",DeleteQuestion) == True:
                     if exists(f"{HOME}/KRNL/autoexec"):
                         if exists("/tmp/autoexec"):
-                            os.system("""
-                            rm -R /tmp/autoexec
-                            """)
-                        os.system("""
-                        cp -R $HOME/KRNL/autoexec /tmp
-                        """)
+                            remove("/tmp/autoexec",False,True)
+                        copy(f"{HOME}/KRNL/autoexec", "/tmp",False,True)
                     if exists(f"{HOME}/KRNL/workspace"):
                         if exists("/tmp/workspace"):
-                            os.system("""
-                            rm -R /tmp/workspace
-                            """)
-                        os.system("""
-                        cp -R $HOME/KRNL/workspace /tmp
-                        """)
-                    os.system("""
-                    rm -R $HOME/KRNL
-                    """)
+                            remove("/tmp/workspace",False,True)
+                        copy(f"{HOME}/KRNL/workspace","/tmp",False,True)
+                    remove(f"{HOME}/KRNL",False,True)
                 elif re.search("N",DeleteQuestion) == True:
                     print("")
                 else:
                     if exists(f"{HOME}/KRNL/autoexec"):
                         if exists("/tmp/autoexec"):
-                            os.system("""
-                            rm -R /tmp/autoexec
-                            """)
-                        os.system("""
-                        cp -R $HOME/KRNL/autoexec /tmp
-                        """)
+                            remove("/tmp/autoexec",False,True)
+                        copy(f"{HOME}/KRNL/autoexec", "/tmp",False,True)
                     if exists(f"{HOME}/KRNL/workspace"):
                         if exists("/tmp/workspace"):
-                            os.system("""
-                            rm -R /tmp/workspace
-                            """)
-                        os.system("""
-                        cp -R $HOME/KRNL/workspace /tmp
-                        """)
-                    os.system("""
-                    rm -R $HOME/KRNL
-                    """)
+                            remove("/tmp/workspace",False,True)
+                        copy(f"{HOME}/KRNL/workspace","/tmp",False,True)
+                    remove(f"{HOME}/KRNL",False,True)
             if TkgInstalled == False:
                 TKGQuestion = Question("The wine mouse patch is not installed and this is necessary to run Krnl. Do u want to install this? (Y/N) : ")
                 if re.search("Y",TKGQuestion) == True:
-                    Info("Installing TKG")
-                    DEBUG("Downloading install.py and executing it (wget CONTENT_TOO_LONG, python3 install.py > /dev/null)")
-                    os.system("""
-                        cd /tmp
-                        wget https://pastebin.com/raw/5SeVb005 -O install.py > /dev/null
-                        python3 install.py > /dev/null
-                    """)
+                    DEBUG("Function wget, Content https://pastebin.com/raw/5SeVb005, File /tmp/install.py")
+                    Info("Downloading TKG")
+                    wget("https://pastebin.com/raw/5SeVb005", "/tmp/install.py")
+                    bash("python3 /tmp/install.py",false)
+                    Info("Sucessfully downloaded TKG")
                 elif re.search("N",TKGQuestion) == True:
                     print("")
                 else:
-                    Info("Installing TKG")
-                    DEBUG("Downloading install.py and executing it (wget CONTENT_TOO_LONG, python3 install.py > /dev/null)")
-                    os.system("""
-                        cd /tmp
-                        wget https://pastebin.com/raw/5SeVb005 -O install.py > /dev/null
-                        python3 install.py > /dev/null
-                    """)
-            DEBUG("Making KRNL Directory (mkdir KRNL)")
+                    DEBUG("Function wget, Content https://pastebin.com/raw/5SeVb005, File /tmp/install.py")
+                    Info("Downloading TKG")
+                    wget("https://pastebin.com/raw/5SeVb005", "/tmp/install.py")
+                    bash("python3 /tmp/install.py",false)
+                    Info("Sucessfully downloaded TKG")
+            DEBUG("Function os.system (Bash), cd $HOME && mkdir KRNL && cd KRNL")
             Info("Making Files")
             os.system("""
             cd $HOME
             mkdir KRNL
             cd KRNL""")
-            DEBUG("Making autoexec,workspace,bin Directories (mkdir autoexec, mkdir workspace, mkdir bin)")
+            DEBUG("Function os.system (Bash), cd $HOME/KRNL && mkdir autoexec && mkdir workspace && mkdir bin")
             os.system("""""
             cd $HOME/KRNL
             mkdir autoexec
             mkdir workspace
             mkdir bin""")
-            DEBUG("Making run.sh (krnl) (touch krnl, chmod +x krnl, echo CONTENT_TOO_LONG > krnl)")
+            DEBUG("Function os.system (Bash), cd $HOME/KRNL && touch krnl && chmod +x krnl && content.long")
             os.system("""
             cd $HOME/KRNL
             touch krnl
@@ -356,8 +363,9 @@ if __name__ == '__main__':
             echo "[#] Executing Console..." 
             $HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine $HOME/KRNL/bin/CLI
             ' > krnl""")
-            DEBUG(f"Downloading InternalGui & krnl.dll & CLI (touch autoexec/InternalGui.txt, wget CONTENT_TOO_LONG KRNL/krnl.dll, wget CONTENT_TOO_LONG KRNL/bin/CLI")
+            DEBUG(f"Function os.system (Bash), cd krnldir/autoexec, touch InternalGui.txt, content.too.long")
             Info("Downloading Dependencies")
+
             os.system("""
             cd $HOME/KRNL
             cd autoexec
