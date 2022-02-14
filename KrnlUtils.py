@@ -7,6 +7,13 @@ null = None
 
 import os
 import getpass
+try:
+    import git
+    from git import repo
+except ModuleNotFoundError:
+    os.system("pip3 install --user gitpython")
+import git
+from git import repo
 import sys
 import re
 import urllib.request
@@ -85,12 +92,12 @@ def mkdir(path,sudo):
         sudo = False
     DEBUG("Mkdirf path."+path+" sudo."+str(sudo))
     if sudo == True:
-        os.system(f"sudo mkdir {path}")
+        return bash(f"sudo mkdir {path}")
     else:
-        os.system(f"mkdir {path}")
+        return bash(f"mkdir {path}")
 def readfile(path):
     DEBUG("Readfilef path."+path)
-    return os.popen(f"cat {path}").read()
+    return bash(f"cat {path}")
 
 def remove(path,sudo,isdir):
     if isdir == "":
@@ -99,19 +106,14 @@ def remove(path,sudo,isdir):
         sudo = False
     DEBUG("Removef path."+path+" sudo."+str(sudo)+" isdir."+str(isdir))
     if sudo == False and isdir == False:
-        CommandExecution = os.popen(f"rm {path}").read()
+        return bash(f"rm {path}")
     if sudo and isdir == False:
-        CommandExecution = os.popen(f"sudo rm {path}").read()
+        return bash(f"sudo rm {path}")
     if sudo == False and isdir:
-        CommandExecution = os.popen(f"rm -R {path}").read()
+        return bash(f"rm -R {path}")
     if sudo and isdir:
-        CommandExecution = os.popen(f"sudo rm -R {path}").read()
-    if re.search("error",CommandExecution.lower()):
-        Error("An error ocurred while executing copy")
-        DEBUG(CommandExecution)
-        
-        sys.exit()
-    return CommandExecution
+        return bash(f"sudo rm -R {path}")
+
 def copy(path,path2,sudo,isdir):
     if isdir == "":
         isdir = False
@@ -120,7 +122,6 @@ def copy(path,path2,sudo,isdir):
     DEBUG("Copyf frompath."+path+" topath."+path2+" sudo."+str(sudo)+" isdir."+str(isdir))
     if sudo == False and isdir == False:
         return bash(f"cp {path} {path2}")
-
     if sudo and isdir == False:
         return bash(f"sudo cp {path} {path2}")
     if sudo == False and isdir:
@@ -195,8 +196,7 @@ def GrapejuiceInstall():
         DEBUG("/usr/bin/pacman Exists running arch installation for grapejuice")
         Process("Instaling Arch Grapejuice")
         DEBUG("Installing base-devel (pacman -S base-devel)")
-        os.system("""
-        sudo pacman -S base-devel""")
+        bash("sudo pacman -S base-devel")
         DEBUG("Cloning grapejuice repository (git clone https://aur.archlinux.org/grapejuice-git.git)")
         os.system("""
         cd $HOME
