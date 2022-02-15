@@ -91,6 +91,8 @@ def wget(link,path):
     DEBUG("Downloadf url."+link+" path."+path)
     open(path,'wb').write(r.content)
 def mkfile(path,content,debugrunning=False):
+    if exists(path) == False:
+        bash(f"touch {path} > /dev/null")
     if debugrunning == False:
         DEBUG("Writef path."+path+" content."+content)
     with open(path, 'w') as f:
@@ -141,6 +143,12 @@ def copy(path,path2,sudo= False,isdir= False):
 def bash(cmd,output= True):
     if output == false:
         cmd = cmd + " > /dev/null"
+    if re.findall("\n",cmd)[4]:
+        DEBUG("Bashf cmd.TOO_MUCH_NEWLINE")
+    elif len(cmd) > 1100:
+        DEBUG("Bashf cmd.LEN_MORE_THAN_1100")
+    else:
+        DEBUG("Bashf cmd." + cmd)
     pipe = subprocess.Popen(cmd,shell=true,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     res = pipe.communicate()
     if not pipe.returncode == 0:
