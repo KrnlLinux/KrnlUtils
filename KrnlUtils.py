@@ -62,9 +62,9 @@ def Process(text):
 def DEBUG(text):
     text = str(text)
     if not exists(f"{HOME}/.krnltmp"):
-        mkdir(f"{HOME}/.krnltmp",False)
+        mkdir(f"{HOME}/.krnltmp",False,True)
     if not exists(f"{HOME}/.krnltmp/.debuglogs"):
-        mkfile(f"{HOME}/.krnltmp/.debuglogs","[DEBUG LOGS BEGIN]")
+        mkfile(f"{HOME}/.krnltmp/.debuglogs","[DEBUG LOGS BEGIN]",True)
     bash(f"echo '{text}' >> {HOME}/.krnltmp/.debuglogs")
     if quiet == True:
         return "Quiet Mode"
@@ -85,14 +85,16 @@ def wget(link,path):
     r = requests.get(link, allow_redirects=True)
     DEBUG("Downloadf url."+link+" path."+path)
     open(path,'wb').write(r.content)
-def mkfile(path,content):
-    DEBUG("Writef path."+path+" content."+content)
+def mkfile(path,content,debugrunning=False):
+    if debugrunning == False:
+        DEBUG("Writef path."+path+" content."+content)
     with open(path, 'w') as f:
         f.write(content)
-def mkdir(path,sudo=False):
+def mkdir(path,sudo=False,debugrunning=False):
     if sudo == None or sudo == "":
         sudo = False
-    DEBUG("Mkdirf path."+path+" sudo."+str(sudo))
+    if debugrunning == False:
+        DEBUG("Mkdirf path."+path+" sudo."+str(sudo))
     if sudo == True:
         return bash(f"sudo mkdir {path}")
     else:
