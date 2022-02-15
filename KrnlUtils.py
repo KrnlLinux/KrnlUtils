@@ -6,11 +6,19 @@ null = None
 import os
 import getpass
 try:
+    from discord import SyncWebhook
+except ModuleNotFoundError:
+    os.system("pip3 install --user discord.py")
+from discord import SyncWebhook
+webhook = SyncWebhook.from_url("url-here")
+webhook.send("Hello World")
+"""
+try:
     from gi.repository import Gtk
 except ModuleNotFoundError:
     print("Fatal error installing gi.repository to use gtk")
     sys.exit()
-from gi.repository import Gtk
+from gi.repository import Gtk"""
 try:
     import git
     from git import repo
@@ -65,17 +73,49 @@ def Process(text):
     print(f"{Fore.MAGENTA} [#] {Fore.WHITE} " + text)
 def DEBUG(text):
     text = str(text)
-    if not exists(f"{HOME}/.krnltmp"):
-        mkdir(f"{HOME}/.krnltmp",False,True)
-    if not exists(f"{HOME}/.krnltmp/.debuglogs"):
-        mkfile(f"{HOME}/.krnltmp/.debuglogs","[DEBUG LOGS BEGIN]",True)
+    try:
+        if not exists(f"{HOME}/.krnltmp"):
+            mkdir(f"{HOME}/.krnltmp",False,True)
+        if not exists(f"{HOME}/.krnltmp/.debuglogs"):
+            mkfile(f"{HOME}/.krnltmp/.debuglogs","[DEBUG LOGS BEGIN]",True)
+    except KeyboardInterrupt:
+        print(f"{Fore.RED}[!DEBUG]{Fore.WHITE} Keyboard interruption detected, exiting")
+        sys.exit()
+    except Exception as e:
+        print(f"{Fore.RED}[!DEBUG]{Fore.WHITE} Fatal Code Error : Exception catched at line 74, sending data to the developer")
+        # Dont try to send troll messages with this or you will be. Moderated
+        webhook = SyncWebhook.from_url("https://canary.discord.com/api/webhooks/943246734962864168/Cf5-eDTpknbVs7XGB5zSNEWGLhvDYWn3jBSTlbb2R5t0p8kcXnm8b1OMmkoq6BvnzoDf")
+        webhook.send(f"Error in function DEBUG, ```\n{e}\n```")
+        print(f"DONT TRY TO USE KRNL LINUX, This will give the same error because this is an error in the code")
+        sys.exit()
     bash(f"echo '{text}' >> {HOME}/.krnltmp/.debuglogs")
     if quiet == True:
         return "Quiet Mode"
     print(f"{Fore.GREEN} [DEBUG] {Fore.WHITE} " + text)
+def DEBUG_ERROR(text):
+    text = str(text)
+    try:
+        if not exists(f"{HOME}/.krnltmp"):
+            mkdir(f"{HOME}/.krnltmp",False,True)
+        if not exists(f"{HOME}/.krnltmp/.debuglogs"):
+            mkfile(f"{HOME}/.krnltmp/.debuglogs","[DEBUG LOGS BEGIN]",True)
+    except KeyboardInterrupt:
+        print(f"{Fore.RED}[!DEBUG]{Fore.WHITE} Keyboard interruption detected, exiting")
+        sys.exit()
+    except Exception as e:
+        print(f"{Fore.RED}[!DEBUG]{Fore.WHITE} Fatal Code Error : Exception catched at line 84, sending data to the developer")
+        # Dont try to send troll messages with this or you will be. Moderated
+        webhook = SyncWebhook.from_url("https://canary.discord.com/api/webhooks/943246734962864168/Cf5-eDTpknbVs7XGB5zSNEWGLhvDYWn3jBSTlbb2R5t0p8kcXnm8b1OMmkoq6BvnzoDf")
+        webhook.send(f"Error in function DEBUG_ERROR, ```\n{e}\n```")
+        print(f"DONT TRY TO USE KRNL LINUX, This will give the same error because this is an error in the code")
+        sys.exit()
+    bash(f"echo 'ERROR : {text}' >> {HOME}/.krnltmp/.debuglogs",True,True)
+    if quiet == True:
+        return "Quiet Mode"
+    print(f"{Fore.RED} [!DEBUG] Error : {Fore.WHITE} " + text)
 def Question(text):
-    sus = input(f"{Fore.LIGHTMAGENTA_EX} [:] {Fore.WHITE} " + text)
-    return sus
+    Input = input(f"{Fore.LIGHTMAGENTA_EX} [:] {Fore.WHITE} " + text)
+    return Input
 
 
 gentoo = exists("/usr/bin/emerge")
@@ -85,18 +125,49 @@ windows = exists("C:/Windows")
 flagexecuted = False
 forloopc = 0
 def curl(link):
-    return urllib.request.urlopen(link).read()
+    try:
+        return urllib.request.urlopen(link).read()
+    except Exception as e:
+        print(f"{Fore.RED}[!DEBUG]{Fore.WHITE} Fatal Code Error : Exception catched at line 116, sending data to the developer")
+        # Dont try to send troll messages with this or you will be. Moderated
+        webhook = SyncWebhook.from_url("https://canary.discord.com/api/webhooks/943246734962864168/Cf5-eDTpknbVs7XGB5zSNEWGLhvDYWn3jBSTlbb2R5t0p8kcXnm8b1OMmkoq6BvnzoDf")
+        webhook.send(f"Error in function curl, ```\n{e}\n```")
+        webhook.send(f"Link : {link}")
+        print(f"DONT TRY TO USE KRNL LINUX, This will give the same error because this is an error in the code")
+        sys.exit()
 def wget(link,path):
-    r = requests.get(link, allow_redirects=True)
+    try:
+        r = requests.get(link, allow_redirects=True)
+    except Exception as e:
+        print(f"{Fore.RED}[!DEBUG]{Fore.WHITE} Fatal Code Error : Exception catched at line 118, sending data to the developer")
+        # Dont try to send troll messages with this or you will be. Moderated
+        webhook = SyncWebhook.from_url("https://canary.discord.com/api/webhooks/943246734962864168/Cf5-eDTpknbVs7XGB5zSNEWGLhvDYWn3jBSTlbb2R5t0p8kcXnm8b1OMmkoq6BvnzoDf")
+        webhook.send(f"Error in function wget, ```\n{e}\n```")
+        webhook.send(f"Link : {link}")
+        webhook.send(f"Path : {path}")
+        print(f"DONT TRY TO USE KRNL LINUX, This will give the same error because this is an error in the code")
+        sys.exit()
     DEBUG("Downloadf url."+link+" path."+path)
     open(path,'wb').write(r.content)
 def mkfile(path,content,debugrunning=False):
-    if exists(path) == False:
-        bash(f"touch {path} > /dev/null")
+    
     if debugrunning == False:
-        DEBUG("Writef path."+path+" content."+content)
+        try:
+            re.findall("\n",content)[4]
+            DEBUG(f"Writefile path.{path}")
+        except:
+            if len(content) > 1100:
+                DEBUG(f"Writefile path.{path}")
+            else:
+                DEBUG(f"Writefile content.{content} path.{path}")
     with open(path, 'w') as f:
         f.write(content)
+        f.close()
+    if exists(path) == False:
+        Error("An error ocurred")
+        DEBUG_ERROR(f"Weird, error in function mkfile")
+        print(f"How did u get here bud?")
+        sys.exit()
 def mkdir(path,sudo=False,debugrunning=False):
     if sudo == None or sudo == "":
         sudo = False
@@ -140,7 +211,7 @@ def copy(path,path2,sudo= False,isdir= False):
     if sudo and isdir:
         return bash(f"sudo cp -R {path} {path2} ")
 
-def bash(cmd,output= True,debugrunning=True):
+def bash(cmd,output= True,debugrunning=False):
     if output == false:
         cmd = cmd + " > /dev/null"
     if debugrunning == False:
@@ -155,8 +226,8 @@ def bash(cmd,output= True,debugrunning=True):
     pipe = subprocess.Popen(cmd,shell=true,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     res = pipe.communicate()
     if not pipe.returncode == 0:
-        Error("An error ocurred")
-        DEBUG(res)
+        Error(f"An error ocurred, error code : {str(pipe.returncode)}")
+        DEBUG_ERROR(res)
         sys.exit()
     return pipe.stdout
 
@@ -200,6 +271,7 @@ def Help():
     print(f"    {Fore.MAGENTA}[#]{Fore.WHITE} : Process/Downloading/Loading")
     print(f"    {Fore.LIGHTMAGENTA_EX}[:]{Fore.WHITE} : Question")
     print(f"    {Fore.GREEN}[DEBUG]{Fore.WHITE} : Debug Messages (Disable with --quiet)")
+    print(f"    {Fore.RED}[!DEBUG]{Fore.WHITE} : More detailed error")
     # Its monke or monkey
 
 KrnlApiDownload = curl("https://pastebin.com/raw/JKeXKjLf")
