@@ -272,7 +272,6 @@ if __name__ == '__main__':
         elif GetFlag("--install-tkg") or GetFlag("-tkg"):
             flagexecuted = True
             if not TkgInstalled:
-                DEBUG("Function wget, Content https://pastebin.com/raw/5SeVb005, File /tmp/install.py")
                 Info("Downloading TKG")
                 wget("https://pastebin.com/raw/5SeVb005", "/tmp/install.py")
                 os.system("python3 /tmp/install.py > /dev/null")
@@ -318,7 +317,6 @@ if __name__ == '__main__':
             if TkgInstalled == False:
                 TKGQuestion = Question("The wine mouse patch is not installed and this is necessary to run Krnl. Do u want to install this? (Y/N) : ")
                 if re.search("Y",TKGQuestion) == True:
-                    DEBUG("Function wget, Content https://pastebin.com/raw/5SeVb005, File /tmp/install.py")
                     Info("Downloading TKG")
                     wget("https://pastebin.com/raw/5SeVb005", "/tmp/install.py")
                     bash("python3 /tmp/install.py",false)
@@ -326,7 +324,6 @@ if __name__ == '__main__':
                 elif re.search("N",TKGQuestion) == True:
                     print("")
                 else:
-                    DEBUG("Function wget, Content https://pastebin.com/raw/5SeVb005, File /tmp/install.py")
                     Info("Downloading TKG")
                     wget("https://pastebin.com/raw/5SeVb005", "/tmp/install.py")
                     bash("python3 /tmp/install.py",false)
