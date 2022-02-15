@@ -140,7 +140,7 @@ def copy(path,path2,sudo= False,isdir= False):
     if sudo and isdir:
         return bash(f"sudo cp -R {path} {path2} ")
 
-def bash(cmd,output= True,debugrunning):
+def bash(cmd,output= True,debugrunning=True):
     if output == false:
         cmd = cmd + " > /dev/null"
     if debugrunning == False:
