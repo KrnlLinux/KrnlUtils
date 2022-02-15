@@ -4,7 +4,6 @@ nil = None
 null = None
 
 
-print("Not working wait until patch of krnl for linux")
 from distutils.file_util import write_file
 import os
 import getpass
@@ -44,13 +43,13 @@ if getpass.getuser() == "root":
 HOME = f"/home/{getpass.getuser()}"
 KrnlInstalled =exists(f"{HOME}/KRNL")
 RunInstalled = exists(f"{HOME}/KRNL/krnl")
-TkgInstalled=exists(f"{HOME}/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine")
+TkgInstalled=exists(f"{HOME}/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.2.r0.g68441b1d/bin/wine")
 LinkInstalled=exists("/bin/krnl")
 KrnlPath=f"{HOME}/KRNL"
 RunPath=f"{KrnlPath}/krnl"
-TkgPath=f"{HOME}/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine"
+TkgPath=f"{HOME}/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.2.r0.g68441b1d/bin/wine"
 LinkPath=f"/bin/krnl"
-sys.exit()
+
 quiet = False
 def Error(text):
     print(f"{Fore.RED} [!] {Fore.WHITE}Error : " + text)
