@@ -103,9 +103,9 @@ def mkdir(path,sudo=False,debugrunning=False):
     if debugrunning == False:
         DEBUG("Mkdirf path."+path+" sudo."+str(sudo))
     if sudo == True:
-        return bash(f"sudo mkdir {path}")
+        return bash(f"sudo mkdir {path}",True,debugrunning)
     else:
-        return bash(f"mkdir {path}")
+        return bash(f"mkdir {path}",True,debugrunning)
 def readfile(path):
     DEBUG("Readfilef path."+path)
     return bash(f"cat {path}")
@@ -140,17 +140,18 @@ def copy(path,path2,sudo= False,isdir= False):
     if sudo and isdir:
         return bash(f"sudo cp -R {path} {path2} ")
 
-def bash(cmd,output= True):
+def bash(cmd,output= True,debugrunning):
     if output == false:
         cmd = cmd + " > /dev/null"
-    try:
-        re.findall("\n",cmd)[4]
-        DEBUG("Bashf cmd.TOO_MUCH_NEWLINE")
-    except:
-        if len(cmd) > 1100:
-            DEBUG("Bashf cmd.LEN_MORE_THAN_1100")
-        else:
-            DEBUG("Bashf cmd." + cmd)
+    if debugrunning == False:
+        try:
+            re.findall("\n",cmd)[4]
+            DEBUG("Bashf cmd.TOO_MUCH_NEWLINE")
+        except:
+            if len(cmd) > 1100:
+                DEBUG("Bashf cmd.LEN_MORE_THAN_1100")
+            else:
+                DEBUG("Bashf cmd." + cmd)
     pipe = subprocess.Popen(cmd,shell=true,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     res = pipe.communicate()
     if not pipe.returncode == 0:
