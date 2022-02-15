@@ -3,10 +3,14 @@ false = False
 nil = None
 null = None
 
-
-from distutils.file_util import write_file
 import os
 import getpass
+try:
+    from gi.repository import Gtk
+except ModuleNotFoundError:
+    print("Fatal error installing gi.repository to use gtk")
+    sys.exit()
+from gi.repository import Gtk
 try:
     import git
     from git import repo
@@ -72,6 +76,7 @@ def DEBUG(text):
 def Question(text):
     sus = input(f"{Fore.LIGHTMAGENTA_EX} [:] {Fore.WHITE} " + text)
     return sus
+
 
 gentoo = exists("/usr/bin/emerge")
 debian = exists("/usr/bin/apt")
