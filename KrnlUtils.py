@@ -364,7 +364,7 @@ if __name__ == '__main__':
             export WINEARCH="win64" 
             export WINEDEBUG="-all" 
             export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" 
-            echo "[#] Executing Attacher..." 
+            echo "[#] Executing Script..." 
             $HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine $HOME/KRNL/execute $@     
             """)
 
