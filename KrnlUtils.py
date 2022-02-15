@@ -6,12 +6,11 @@ null = None
 import os
 import getpass
 try:
-    from discord import SyncWebhook
+    from discord import Webhook, RequestsWebhookAdapter
 except ModuleNotFoundError:
-    os.system("pip3 install --user discord.py")
-from discord import SyncWebhook
-webhook = SyncWebhook.from_url("url-here")
-webhook.send("Hello World")
+    print("Collecting Discord API...")
+    os.system("pip3 install --user discord.py > /dev/null")
+from discord import Webhook, RequestsWebhookAdapter
 """
 try:
     from gi.repository import Gtk
@@ -23,7 +22,8 @@ try:
     import git
     from git import repo
 except ModuleNotFoundError:
-    os.system("pip3 install --user gitpython")
+    print("Collecting Git...")
+    os.system("pip3 install --user gitpython > /dev/null")
 import git
 from git import Repo
 
@@ -33,7 +33,8 @@ import urllib.request
 try:
     import requests
 except ModuleNotFoundError:
-    os.system("pip3 install --user requests")
+    print("Collecting requests...")
+    os.system("pip3 install --user requests > /dev/null")
 import requests
 import subprocess
 from os.path import exists
@@ -42,7 +43,8 @@ try:
     import colorama
     from colorama import Fore, Back, Style
 except ModuleNotFoundError:
-    os.system("pip3 install --user colorama")
+    print("Collecting colorama...")
+    os.system("pip3 install --user colorama > /dev/null")
 import colorama
 from colorama import Fore,Back,Style
 
@@ -84,11 +86,11 @@ def DEBUG(text):
     except Exception as e:
         print(f"{Fore.RED}[!DEBUG]{Fore.WHITE} Fatal Code Error : Exception catched at line 74, sending data to the developer")
         # Dont try to send troll messages with this or you will be. Moderated
-        webhook = SyncWebhook.from_url("https://canary.discord.com/api/webhooks/943246734962864168/Cf5-eDTpknbVs7XGB5zSNEWGLhvDYWn3jBSTlbb2R5t0p8kcXnm8b1OMmkoq6BvnzoDf")
+        webhook = Webhook.from_url("https://canary.discord.com/api/webhooks/943246734962864168/Cf5-eDTpknbVs7XGB5zSNEWGLhvDYWn3jBSTlbb2R5t0p8kcXnm8b1OMmkoq6BvnzoDf", adapter=RequestsWebhookAdapter())
         webhook.send(f"Error in function DEBUG, ```\n{e}\n```")
         print(f"DONT TRY TO USE KRNL LINUX, This will give the same error because this is an error in the code")
         sys.exit()
-    bash(f"echo '{text}' >> {HOME}/.krnltmp/.debuglogs")
+    bash(f"echo '{text}' >> {HOME}/.krnltmp/.debuglogs",False,True)
     if quiet == True:
         return "Quiet Mode"
     print(f"{Fore.GREEN} [DEBUG] {Fore.WHITE} " + text)
@@ -105,7 +107,7 @@ def DEBUG_ERROR(text):
     except Exception as e:
         print(f"{Fore.RED}[!DEBUG]{Fore.WHITE} Fatal Code Error : Exception catched at line 84, sending data to the developer")
         # Dont try to send troll messages with this or you will be. Moderated
-        webhook = SyncWebhook.from_url("https://canary.discord.com/api/webhooks/943246734962864168/Cf5-eDTpknbVs7XGB5zSNEWGLhvDYWn3jBSTlbb2R5t0p8kcXnm8b1OMmkoq6BvnzoDf")
+        webhook = Webhook.from_url("https://canary.discord.com/api/webhooks/943246734962864168/Cf5-eDTpknbVs7XGB5zSNEWGLhvDYWn3jBSTlbb2R5t0p8kcXnm8b1OMmkoq6BvnzoDf", adapter=RequestsWebhookAdapter())
         webhook.send(f"Error in function DEBUG_ERROR, ```\n{e}\n```")
         print(f"DONT TRY TO USE KRNL LINUX, This will give the same error because this is an error in the code")
         sys.exit()
@@ -130,7 +132,7 @@ def curl(link):
     except Exception as e:
         print(f"{Fore.RED}[!DEBUG]{Fore.WHITE} Fatal Code Error : Exception catched at line 116, sending data to the developer")
         # Dont try to send troll messages with this or you will be. Moderated
-        webhook = SyncWebhook.from_url("https://canary.discord.com/api/webhooks/943246734962864168/Cf5-eDTpknbVs7XGB5zSNEWGLhvDYWn3jBSTlbb2R5t0p8kcXnm8b1OMmkoq6BvnzoDf")
+        webhook = webhook = Webhook.from_url("https://canary.discord.com/api/webhooks/943246734962864168/Cf5-eDTpknbVs7XGB5zSNEWGLhvDYWn3jBSTlbb2R5t0p8kcXnm8b1OMmkoq6BvnzoDf", adapter=RequestsWebhookAdapter())
         webhook.send(f"Error in function curl, ```\n{e}\n```")
         webhook.send(f"Link : {link}")
         print(f"DONT TRY TO USE KRNL LINUX, This will give the same error because this is an error in the code")
@@ -141,13 +143,15 @@ def wget(link,path):
     except Exception as e:
         print(f"{Fore.RED}[!DEBUG]{Fore.WHITE} Fatal Code Error : Exception catched at line 118, sending data to the developer")
         # Dont try to send troll messages with this or you will be. Moderated
-        webhook = SyncWebhook.from_url("https://canary.discord.com/api/webhooks/943246734962864168/Cf5-eDTpknbVs7XGB5zSNEWGLhvDYWn3jBSTlbb2R5t0p8kcXnm8b1OMmkoq6BvnzoDf")
+        webhook = webhook = Webhook.from_url("https://canary.discord.com/api/webhooks/943246734962864168/Cf5-eDTpknbVs7XGB5zSNEWGLhvDYWn3jBSTlbb2R5t0p8kcXnm8b1OMmkoq6BvnzoDf", adapter=RequestsWebhookAdapter())
         webhook.send(f"Error in function wget, ```\n{e}\n```")
         webhook.send(f"Link : {link}")
         webhook.send(f"Path : {path}")
         print(f"DONT TRY TO USE KRNL LINUX, This will give the same error because this is an error in the code")
         sys.exit()
-    DEBUG("Downloadf url."+link+" path."+path)
+    DEBUG("Downloadf url."+str(link)+" path."+str(path))
+    if exists(path) == False:
+        bash(f"touch {path}")
     open(path,'wb').write(r.content)
 def mkfile(path,content,debugrunning=False):
     
@@ -321,19 +325,23 @@ if __name__ == '__main__':
         elif GetFlag("--linux-krnl-attach") or GetFlag("-lka"):
             if exists(KrnlPath) == False:
                 Error("KRNL Not installed")
+                DEBUG_ERROR(f"{KrnlPath} Does not exist, to install use -lik argument")
                 sys.exit()
             if exists(TkgPath) == False:
                 Error("TKG-Binary mouse patch not installed")
+                DEBUG_ERROR(f"{TkgPath} Does not exist, to install use --install-tkg argument")
                 sys.exit()
-            bash("sh attach.sh")
+            bash("sh $HOME/KRNL/attach.sh")
         elif GetFlag("--linux-krnl-execute") or GetFlag("-lke"):
             if exists(KrnlPath) == False:
                 Error("KRNL Not installed")
+                DEBUG_ERROR(f"{KrnlPath} Does not exist, to install use -lik argument")
                 sys.exit()
             if exists(TkgPath) == False:
                 Error("TKG-Binary mouse patch not installed")
+                DEBUG_ERROR(f"{TkgPath} Does not exist, to install use --install-tkg argument")
                 sys.exit()
-            bash(f"sh execute.sh {sys.argv[2]}")
+            bash(f"sh $HOME/KRNL/execute.sh {sys.argv[2]}")
         elif GetFlag("--linux-set-prefix") or GetFlag("-lsp"):
             if RunInstalled:
                 try:
@@ -354,9 +362,6 @@ if __name__ == '__main__':
             flagexecuted = True
             if KrnlInstalled:
                 remove(f"{KrnlPath}",False,True)
-                os.system(f"""
-                rm -R {KrnlPath}
-                """)
                 Info("Done")
             else:
                 Error("Krnl is not installed")
@@ -365,7 +370,7 @@ if __name__ == '__main__':
             if not TkgInstalled:
                 Info("Downloading TKG")
                 wget("https://pastebin.com/raw/5SeVb005", "/tmp/install.py")
-                os.system("python3 /tmp/install.py > /dev/null")
+                bash("python3 /tmp/install.py",False)
                 Info("Sucessfully downloaded TKG")
             else:
                 TKGQuestion= Question("TKG Is already installed, do you want to delete it and continue? (Y/N) : ")
@@ -374,7 +379,7 @@ if __name__ == '__main__':
                     DEBUG("Function wget, Content https://pastebin.com/raw/5SeVb005, File /tmp/install.py")
                     Info("Downloading TKG")
                     wget("https://pastebin.com/raw/5SeVb005","/tmp/install.py")
-                    os.system("python3 /tmp/install.py > /dev/null")
+                    bash("python3 /tmp/install.py",false)
                     Info("Sucessfully downloaded TKG")
                 else:
                     Info("Okay, TKG Will not be deleted or installed")
@@ -424,40 +429,38 @@ if __name__ == '__main__':
             mkdir("$HOME/KRNL/workspace")
             mkdir("$HOME/KRNL/bin")
             mkfile(f"{KrnlPath}/attach.sh","""
-            if [[ -z "${PREFIX}" ]]; then
-            echo "What is your PLAYER wineprefix name?"
-            echo 'To make KRNL not ask this everytime you execute it, use --linux-set-prefix [PREFIXNAME]
-            read PREFIX
-            fi
-            echo "WARNING : If you have any error/question just call SimplyDeveloper"
-            export WINEPREFIXPATH="$HOME/.local/share/grapejuice/prefixes/${PREFIX}"
-            export WINEPREFIX=$WINEPREFIXPATH 
-            export WINEARCH="win64" 
-            export WINEDEBUG="-all" 
-            export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" 
-            echo "[#] Executing Attacher..." 
-            $HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine $HOME/KRNL/attach     
-            """)
+if [[ -z "${PREFIX}" ]]; then
+echo "What is your PLAYER wineprefix name?"
+echo 'To make KRNL not ask this everytime you execute it, use --linux-set-prefix [PREFIXNAME]'
+read PREFIX
+fi
+echo "WARNING : If you have any error/question just call SimplyDeveloper"
+export WINEPREFIXPATH="$HOME/.local/share/grapejuice/prefixes/${PREFIX}"
+export WINEPREFIX=$WINEPREFIXPATH 
+export WINEARCH="win64" 
+export WINEDEBUG="-all" 
+export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" 
+echo "[#] Executing Attacher..." 
+"""+TkgPath+""" $HOME/KRNL/attach""")
             mkfile(f"{KrnlPath}/execute.sh","""
-            if [[ -z "${PREFIX}" ]]; then
-            echo "What is your PLAYER wineprefix name?"
-            echo 'To make KRNL not ask this everytime you execute it, use --linux-set-prefix [PREFIXNAME]
-            read PREFIX
-            fi
-            echo "WARNING : If you have any error/question just call SimplyDeveloper"
-            export WINEPREFIXPATH="$HOME/.local/share/grapejuice/prefixes/${PREFIX}"
-            export WINEPREFIX=$WINEPREFIXPATH 
-            export WINEARCH="win64" 
-            export WINEDEBUG="-all" 
-            export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" 
-            echo "[#] Executing Script..." 
-            $HOME/.local/share/grapejuice/user/wine-download/wine-tkg-staging-fsync-git-7.1.r2.gc437a01e/bin/wine $HOME/KRNL/execute $@     
-            """)
+if [[ -z "${PREFIX}" ]]; then
+echo "What is your PLAYER wineprefix name?"
+echo 'To make KRNL not ask this everytime you execute it, use --linux-set-prefix [PREFIXNAME]'
+read PREFIX
+fi
+echo "WARNING : If you have any error/question just call SimplyDeveloper"
+export WINEPREFIXPATH="$HOME/.local/share/grapejuice/prefixes/${PREFIX}"
+export WINEPREFIX=$WINEPREFIXPATH 
+export WINEARCH="win64" 
+export WINEDEBUG="-all" 
+export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" 
+echo "[#] Executing Script..." 
+"""+ TkgPath +""" $HOME/KRNL/execute $@""")
 
             mkfile(f"{KrnlPath}/autoexec/InternalGui.txt","loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()")
-            wget(KrnlApiDownload, "$HOME/KRNL/KrnlAPI.dll")
-            wget(KrnlAttacherDownload, "$HOME/KRNL/attach")
-            wget(KrnlExecutorDownload, "$HOME/KRNL/execute")
+            wget(KrnlApiDownload, f"{KrnlPath}/KrnlAPI.dll")
+            wget(KrnlAttacherDownload, f"{KrnlPath}/attach")
+            wget(KrnlExecutorDownload, f"{KrnlPath}/execute")
             Info("KRNL Sucessfully downloaded")
         elif GetFlag("--linux-download-autoexec") or GetFlag("-lda"):
             flagexecuted = True
