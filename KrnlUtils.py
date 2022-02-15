@@ -143,12 +143,14 @@ def copy(path,path2,sudo= False,isdir= False):
 def bash(cmd,output= True):
     if output == false:
         cmd = cmd + " > /dev/null"
-    if re.findall("\n",cmd)[4]:
+    try:
+        re.findall("\n",cmd)[4]
         DEBUG("Bashf cmd.TOO_MUCH_NEWLINE")
-    elif len(cmd) > 1100:
-        DEBUG("Bashf cmd.LEN_MORE_THAN_1100")
-    else:
-        DEBUG("Bashf cmd." + cmd)
+    except:
+        if len(cmd) > 1100:
+            DEBUG("Bashf cmd.LEN_MORE_THAN_1100")
+        else:
+            DEBUG("Bashf cmd." + cmd)
     pipe = subprocess.Popen(cmd,shell=true,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     res = pipe.communicate()
     if not pipe.returncode == 0:
