@@ -335,7 +335,6 @@ if __name__ == '__main__':
             mkdir("$HOME/KRNL/autoexec")
             mkdir("$HOME/KRNL/workspace")
             mkdir("$HOME/KRNL/bin")
-            mkfile("")
             mkfile(f"{KrnlPath}/attach.sh","""
             if [[ -z "${PREFIX}" ]]; then
             echo "What is your PLAYER wineprefix name?"
