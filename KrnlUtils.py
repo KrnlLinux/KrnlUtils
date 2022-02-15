@@ -60,6 +60,7 @@ def Warning(text):
 def Process(text):
     print(f"{Fore.MAGENTA} [#] {Fore.WHITE} " + text)
 def DEBUG(text):
+    text = str(text)
     if not exists(f"{HOME}/.krnltmp"):
         mkdir(f"{HOME}/.krnltmp",False)
     if not exists(f"{HOME}/.krnltmp/.debuglogs"):
