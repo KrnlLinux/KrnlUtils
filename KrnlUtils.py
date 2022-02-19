@@ -521,7 +521,22 @@ echo "[#] Executing Script..."
 """ + TkgPath + """ $HOME/KRNL/execute $@""")
 
             mkfile(f"{KrnlPath}/autoexec/InternalGui.txt",
-                   "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()")
+                   """
+if not writefile then
+    warn("You can't execute this script.")
+    
+else
+    local s,e = pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Seflengfist/Scripts/main/Internal%20Gui", true))()
+    end)
+
+    if s then
+        print("1.1")
+    else
+       print("Error: ", e)
+    end
+end
+                   """)
             wget(KrnlApiDownload, f"{KrnlPath}/KrnlAPI.dll")
             wget(KrnlAttacherDownload, f"{KrnlPath}/attach")
             wget(KrnlExecutorDownload, f"{KrnlPath}/execute")
