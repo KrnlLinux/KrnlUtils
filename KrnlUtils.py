@@ -97,12 +97,8 @@ def DEBUG(text):
         sys.exit()
     except Exception as e:
         print(
-            f"{Fore.RED}[!DEBUG]{Fore.WHITE} Fatal Code Error : Exception catched at line 74, sending data to the developer")
-        # Dont try to send troll messages with this or you will be. Moderated
-        webhook = Webhook.from_url(
-            "https://canary.discord.com/api/webhooks/943246734962864168/Cf5-eDTpknbVs7XGB5zSNEWGLhvDYWn3jBSTlbb2R5t0p8kcXnm8b1OMmkoq6BvnzoDf", adapter=RequestsWebhookAdapter())
-        webhook.send(f"Error in function DEBUG, ```\n{e}\n```")
-        print(f"DONT TRY TO USE KRNL LINUX, This will give the same error because this is an error in the code")
+            f"{Fore.RED}[!DEBUG]{Fore.WHITE} Fatal Code Error : Exception catched at line 74")
+        print(e)
         sys.exit()
     bash(f"echo '{text}' >> {HOME}/.krnltmp/.debuglogs", False, True)
     if quiet == True:
@@ -124,12 +120,7 @@ def DEBUG_ERROR(text):
     except Exception as e:
         print(
             f"{Fore.RED}[!DEBUG]{Fore.WHITE} Fatal Code Error : Exception catched at line 84, sending data to the developer")
-        # Dont try to send troll messages with this or you will be. Moderated
-        webhook = Webhook.from_url(
-            "https://canary.discord.com/api/webhooks/943246734962864168/Cf5-eDTpknbVs7XGB5zSNEWGLhvDYWn3jBSTlbb2R5t0p8kcXnm8b1OMmkoq6BvnzoDf", adapter=RequestsWebhookAdapter())
-        webhook.send(f"Error in function DEBUG_ERROR, ```\n{e}\n```")
-        print(f"DONT TRY TO USE KRNL LINUX, This will give the same error because this is an error in the code")
-        sys.exit()
+        print(e)
     bash(f"echo 'ERROR : {text}' >> {HOME}/.krnltmp/.debuglogs", True, True)
     if quiet == True:
         return "Quiet Mode"
@@ -155,12 +146,7 @@ def curl(link):
     except Exception as e:
         print(
             f"{Fore.RED}[!DEBUG]{Fore.WHITE} Fatal Code Error : Exception catched at line 116, sending data to the developer")
-        # Dont try to send troll messages with this or you will be. Moderated
-        webhook = webhook = Webhook.from_url(
-            "https://canary.discord.com/api/webhooks/943246734962864168/Cf5-eDTpknbVs7XGB5zSNEWGLhvDYWn3jBSTlbb2R5t0p8kcXnm8b1OMmkoq6BvnzoDf", adapter=RequestsWebhookAdapter())
-        webhook.send(f"Error in function curl, ```\n{e}\n```")
-        webhook.send(f"Link : {link}")
-        print(f"DONT TRY TO USE KRNL LINUX, This will give the same error because this is an error in the code")
+        print(e)
         sys.exit()
 
 
@@ -170,14 +156,7 @@ def wget(link, path):
     except Exception as e:
         print(
             f"{Fore.RED}[!DEBUG]{Fore.WHITE} Fatal Code Error : Exception catched at line 118, sending data to the developer")
-        # Dont try to send troll messages with this or you will be. Moderated
-        webhook = webhook = Webhook.from_url(
-            "https://canary.discord.com/api/webhooks/943246734962864168/Cf5-eDTpknbVs7XGB5zSNEWGLhvDYWn3jBSTlbb2R5t0p8kcXnm8b1OMmkoq6BvnzoDf", adapter=RequestsWebhookAdapter())
-        webhook.send(f"Error in function wget, ```\n{e}\n```")
-        webhook.send(f"Link : {link}")
-        webhook.send(f"Path : {path}")
-        print(f"DONT TRY TO USE KRNL LINUX, This will give the same error because this is an error in the code")
-        sys.exit()
+        print(e)
     DEBUG("Downloadf url."+str(link)+" path."+str(path))
     if exists(path) == False:
         bash(f"touch {path}")
@@ -298,19 +277,18 @@ def Help():
     print("    --help (-h) : Displays this list")
     print("    --quiet : Disables any DEBUG message\n")
     print(f"{Fore.MAGENTA}Grapejuice (Linux) : ")
-    print("    --grapejuice-install (-gi) : Installs grapejuice using the wiki")
-    print("    --install-tkg (-tkg) : Installs the patched mouse wine for grapejuice\n")
+    print("    install grapejuice : Installs grapejuice using the wiki")
+    print("    install tkg : Installs the patched mouse wine for grapejuice\n")
     print(f"{Fore.CYAN}Linux : ")
     print(f"    {Fore.LIGHTRED_EX}KRNL : ")
-    print("        --linux-install-krnl (-lik) : Installs KRNL")
-    print("        --linux-krnl-attach (-lka) : The name says it all")
-    print(
-        "        --linux-krnl-execute [ARG] (-lke) : Executes a script using KRNL (WARNING : ONLY 1 ARGUMENT SO ITS RECOMMENDED USING LOADSTRING)")
-    print("        --linux-delete-krnl (-ldk) : Removes KRNL")
-    print("        --linux-download-autoexec (-lda) : Downloads the internal gui")
-    print(
-        "        --linux-set-prefix [ARG] (-lsp) : Set the variable PREFIX everytime you use a console (People that installed KRNL will understand what this does)")
-    print("        --linux-beta-gui-build-install (-lbgbi) : Instead of using the console uses a GUI (TODO)")
+    print("        install krnl : Installs KRNL")
+    print("        install vcredist : Installs KRNL's Requirements using winetricks")
+    print("        krnl launch : The name says it all")
+    print("        krnl execute [ARG] (TODO) : Executes a script using KRNL (WARNING : ONLY 1 ARGUMENT SO ITS RECOMMENDED USING LOADSTRING)")
+    print("        remove krnl : Removes KRNL")
+    print("        install internalgui : Downloads the internal gui")
+    print("        krnl set wineprefix [ARG] : Set the variable PREFIX everytime you use a console (People that installed KRNL will understand what this does)")
+    print("        install guibeta (TODO) : Instead of using the console uses a GUI (TODO)")
     print(f"{Fore.CYAN}MacOS KRNL : ")
     print("    Soon\n")
     print(f"{Fore.CYAN}Windows : ")
@@ -326,10 +304,10 @@ def Help():
     print(f"    {Fore.RED}[!DEBUG]{Fore.WHITE} : More detailed error")
     # Its monke or monkey
 
-
-KrnlApiDownload = curl("https://pastebin.com/raw/JKeXKjLf")
-KrnlExecutorDownload = curl("https://pastebin.com/raw/gcH1DTED")
-KrnlAttacherDownload = curl("https://pastebin.com/raw/bU36nsCE")
+KrnlLauncherDownload = curl("https://pastebin.com/raw/wgeLyD2y")
+#KrnlApiDownload = curl("https://pastebin.com/raw/JKeXKjLf")
+#KrnlExecutorDownload = curl("https://pastebin.com/raw/gcH1DTED")
+#KrnlAttacherDownload = curl("https://pastebin.com/raw/bU36nsCE")
 
 
 def GrapejuiceInstall():
@@ -376,31 +354,58 @@ if __name__ == '__main__':
             flagexecuted = True
             Help()
             sys.exit()
-        elif GetFlag("--linux-krnl-attach") or GetFlag("-lka"):
+        elif GetFlag("krnl launch"):
             if exists(KrnlPath) == False:
                 Error("KRNL Not installed")
                 DEBUG_ERROR(
-                    f"{KrnlPath} Does not exist, to install use -lik argument")
+                    f"{KrnlPath} Does not exist, to install use install krnl argument")
                 sys.exit()
             if exists(TkgPath) == False:
                 Error("TKG-Binary mouse patch not installed")
                 DEBUG_ERROR(
-                    f"{TkgPath} Does not exist, to install use --install-tkg argument")
+                    f"{TkgPath} Does not exist, to install use install tkg argument")
                 sys.exit()
-            bash("sh $HOME/KRNL/attach.sh")
-        elif GetFlag("--linux-krnl-execute") or GetFlag("-lke"):
+            bash("sh $HOME/KRNL/launch")
+        elif GetFlag("install vcredist"):
             if exists(KrnlPath) == False:
                 Error("KRNL Not installed")
                 DEBUG_ERROR(
-                    f"{KrnlPath} Does not exist, to install use -lik argument")
+                    f"{KrnlPath} Does not exist, to install use install krnl argument")
                 sys.exit()
             if exists(TkgPath) == False:
                 Error("TKG-Binary mouse patch not installed")
                 DEBUG_ERROR(
-                    f"{TkgPath} Does not exist, to install use --install-tkg argument")
+                    f"{TkgPath} Does not exist, to install use install tkg argument")
                 sys.exit()
-            bash(f"sh $HOME/KRNL/execute.sh {sys.argv[2]}")
-        elif GetFlag("--linux-set-prefix") or GetFlag("-lsp"):
+            mkfile("/tmp/vcredist","""
+            if [[ -z "${PREFIX}" ]]; then
+            echo "What is your PLAYER wineprefix name?"
+            read PREFIX
+            fi
+            export WINEPREFIXPATH="$HOME/.local/share/grapejuice/prefixes/${PREFIX}"
+            export WINEPREFIX=$WINEPREFIXPATH 
+            export WINEARCH="win64" 
+            export WINEDEBUG="-all" 
+            export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" 
+            echo "[#] Downloading VCRedist"
+            winetricks --force vcrun2019
+            """)
+            bash("bash /tmp/vcredist")
+        
+        #elif GetFlag("--linux-krnl-execute") or GetFlag("-lke"):
+        #    if exists(KrnlPath) == False:
+        #        Error("KRNL Not installed")
+        #        DEBUG_ERROR(
+        #            f"{KrnlPath} Does not exist, to install use -lik argument")
+        #        sys.exit()
+        #    if exists(TkgPath) == False:
+        #        Error("TKG-Binary mouse patch not installed")
+        #        DEBUG_ERROR(
+        #            f"{TkgPath} Does not exist, to install use --install-tkg argument")
+        #        sys.exit()
+        #    bash(f"sh $HOME/KRNL/execute.sh {sys.argv[2]}")
+        
+        elif GetFlag("krnl set wineprefix"):
             if RunInstalled:
                 try:
                     lol = sys.argv[2]
@@ -413,17 +418,17 @@ if __name__ == '__main__':
                     Error("No argument given")
             else:
                 Error("KRNL Is not installed")
-        elif GetFlag("--grapejuice-install") or GetFlag("-gi"):
+        elif GetFlag("install grapejuice"):
             flagexecuted = True
             GrapejuiceInstall()
-        elif GetFlag("--linux-delete-krnl") or GetFlag("-ldk"):
+        elif GetFlag("remove krnl"):
             flagexecuted = True
             if KrnlInstalled:
                 remove(f"{KrnlPath}", False, True)
                 Info("Done")
             else:
                 Error("Krnl is not installed")
-        elif GetFlag("--install-tkg") or GetFlag("-tkg"):
+        elif GetFlag("install tkg"):
             flagexecuted = True
             if not TkgInstalled:
                 Info("Downloading TKG")
@@ -443,7 +448,7 @@ if __name__ == '__main__':
                     Info("Sucessfully downloaded TKG")
                 else:
                     Info("Okay, TKG Will not be deleted or installed")
-        elif GetFlag("--linux-install-krnl") or GetFlag("-lik"):
+        elif GetFlag("install krnl"):
             flagexecuted = True
             if exists(f"{HOME}/KRNL"):
                 Warning(
@@ -491,10 +496,10 @@ if __name__ == '__main__':
             mkdir("$HOME/KRNL/autoexec")
             mkdir("$HOME/KRNL/workspace")
             mkdir("$HOME/KRNL/bin")
-            mkfile(f"{KrnlPath}/attach.sh", """
+            mkfile(f"{KrnlPath}/launch", """
 if [[ -z "${PREFIX}" ]]; then
 echo "What is your PLAYER wineprefix name?"
-echo 'To make KRNL not ask this everytime you execute it, use --linux-set-prefix [PREFIXNAME]'
+echo 'To make KRNL dont ask this everytime you execute it, use krnl set wineprefix [PREFIXNAME]'
 read PREFIX
 fi
 echo "WARNING : If you have any error/question just call SimplyDeveloper"
@@ -504,21 +509,21 @@ export WINEARCH="win64"
 export WINEDEBUG="-all" 
 export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" 
 echo "[#] Executing Attacher..." 
-"""+TkgPath+""" $HOME/KRNL/attach""")
-            mkfile(f"{KrnlPath}/execute.sh", """
-if [[ -z "${PREFIX}" ]]; then
-echo "What is your PLAYER wineprefix name?"
-echo 'To make KRNL not ask this everytime you execute it, use --linux-set-prefix [PREFIXNAME]'
-read PREFIX
-fi
-echo "WARNING : If you have any error/question just call SimplyDeveloper"
-export WINEPREFIXPATH="$HOME/.local/share/grapejuice/prefixes/${PREFIX}"
-export WINEPREFIX=$WINEPREFIXPATH 
-export WINEARCH="win64" 
-export WINEDEBUG="-all" 
-export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" 
-echo "[#] Executing Script..." 
-""" + TkgPath + """ $HOME/KRNL/execute $@""")
+"""+TkgPath+""" $HOME/KRNL/.launcher.exe""")
+            #mkfile(f"{KrnlPath}/execute.sh", """
+#if [[ -z "${PREFIX}" ]]; then
+#echo "What is your PLAYER wineprefix name?"
+#echo 'To make KRNL not ask this everytime you execute it, use --linux-set-prefix [PREFIXNAME]'
+#read PREFIX
+#fi
+#echo "WARNING : If you have any error/question just call SimplyDeveloper"
+#export WINEPREFIXPATH="$HOME/.local/share/grapejuice/prefixes/${PREFIX}"
+#export WINEPREFIX=$WINEPREFIXPATH 
+#export WINEARCH="win64" 
+#export WINEDEBUG="-all" 
+#export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" 
+#echo "[#] Executing Script..." 
+#""" + TkgPath + """ $HOME/KRNL/execute $@""")
 
             mkfile(f"{KrnlPath}/autoexec/InternalGui.txt",
                    """
@@ -527,7 +532,7 @@ if not writefile then
     
 else
     local s,e = pcall(function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/Seflengfist/Scripts/main/Internal%20Gui", true))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Seflengfist/Scripts/main/Internal", true))()
     end)
 
     if s then
@@ -537,17 +542,17 @@ else
     end
 end
                    """)
-            wget(KrnlApiDownload, f"{KrnlPath}/KrnlAPI.dll")
-            wget(KrnlAttacherDownload, f"{KrnlPath}/attach")
-            wget(KrnlExecutorDownload, f"{KrnlPath}/execute")
+            wget(KrnlLauncherDownload, f"{KrnlPath}/.launcher.exe")
             Info("KRNL Sucessfully downloaded")
-        elif GetFlag("--linux-download-autoexec") or GetFlag("-lda"):
+            Warning("The InternalGui is being rewritten so you wont be able to use it, tho you can add your own internal gui to the autoexec")
+        elif GetFlag("install internalgui"):
             flagexecuted = True
             if exists(f"{HOME}/KRNL")():
                 mkfile(f"{KrnlPath}/autoexec/InternalGui.txt",
                        "loadstring(game:HttpGet('https://raw.githubusercontent.com/Seflengfist/Scripts/main/Gui', true))()")
                 Info("Done")
                 DEBUG("Writing Ended")
+                Warning("The InternalGui is being rewritten so you wont be able to use it, tho you can add your own internal gui to the autoexec")
             else:
                 DEBUG(f"exists({HOME}/KRNL) False")
                 Error("Krnl not installed")
