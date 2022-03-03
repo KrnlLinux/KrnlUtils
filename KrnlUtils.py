@@ -87,10 +87,11 @@ def Process(text):
 def DEBUG(text):
     text = str(text)
     try:
-        if not exists(f"{HOME}/.krnltmp"):
-            mkdir(f"{HOME}/.krnltmp", False, True)
-        if not exists(f"{HOME}/.krnltmp/.debuglogs"):
-            mkfile(f"{HOME}/.krnltmp/.debuglogs", "[DEBUG LOGS BEGIN]", True)
+        if not windows:
+            if not exists(f"{HOME}/.krnltmp"):
+                mkdir(f"{HOME}/.krnltmp", False, True)
+            if not exists(f"{HOME}/.krnltmp/.debuglogs"):
+                mkfile(f"{HOME}/.krnltmp/.debuglogs", "[DEBUG LOGS BEGIN]", True)
     except KeyboardInterrupt:
         print(
             f"{Fore.RED}[!DEBUG]{Fore.WHITE} Keyboard interruption detected, exiting")
@@ -109,10 +110,11 @@ def DEBUG(text):
 def DEBUG_ERROR(text):
     text = str(text)
     try:
-        if not exists(f"{HOME}/.krnltmp"):
-            mkdir(f"{HOME}/.krnltmp", False, True)
-        if not exists(f"{HOME}/.krnltmp/.debuglogs"):
-            mkfile(f"{HOME}/.krnltmp/.debuglogs", "[DEBUG LOGS BEGIN]", True)
+        if not windows:
+            if not exists(f"{HOME}/.krnltmp"):
+                mkdir(f"{HOME}/.krnltmp", False, True)
+            if not exists(f"{HOME}/.krnltmp/.debuglogs"):
+                mkfile(f"{HOME}/.krnltmp/.debuglogs", "[DEBUG LOGS BEGIN]", True)
     except KeyboardInterrupt:
         print(
             f"{Fore.RED}[!DEBUG]{Fore.WHITE} Keyboard interruption detected, exiting")
@@ -185,6 +187,7 @@ def mkfile(path, content, debugrunning=False):
 
 
 def mkdir(path, sudo=False, debugrunning=False):
+    
     if sudo == None or sudo == "":
         sudo = False
     if debugrunning == False:
@@ -234,7 +237,7 @@ def copy(path, path2, sudo=False, isdir=False):
 
 
 def bash(cmd, output=True, debugrunning=False):
-    if output == false:
+    if output == false and not windows:
         cmd = cmd + " > /dev/null"
     if debugrunning == False:
         try:
@@ -245,14 +248,24 @@ def bash(cmd, output=True, debugrunning=False):
                 DEBUG("Bashf cmd.LEN_MORE_THAN_1100")
             else:
                 DEBUG("Bashf cmd." + cmd)
-    pipe = subprocess.Popen(
-        cmd, shell=true, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    res = pipe.communicate()
-    if not pipe.returncode == 0:
-        Error(f"An error ocurred, error code : {str(pipe.returncode)}")
-        DEBUG_ERROR(res)
-        sys.exit()
-    return pipe.stdout
+    if not windows:
+        pipe = subprocess.Popen(
+            cmd, shell=true, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        res = pipe.communicate()
+        if not pipe.returncode == 0:
+            Error(f"An error ocurred, error code : {str(pipe.returncode)}")
+            DEBUG_ERROR(res)
+            sys.exit()
+        return pipe.stdout
+    else:
+        pipe = subprocess.Popen(
+            "C:\Windows\System32\powershell.exe "+cmd, shell=true, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        res = pipe.communicate()
+        if not pipe.returncode == 0:
+            Error(f"An error ocurred, error code : {str(pipe.returncode)}")
+            DEBUG_ERROR(res)
+            sys.exit()
+        return pipe.stdout
 
 
 def GetDistro():
@@ -265,6 +278,7 @@ def GetDistro():
     if windows == True:
         return "windows"
     if arch == False and gentoo == False and debian == False:
+        print("Oogabooga is STILL the best...")
         return "idk"
 
 
@@ -292,7 +306,21 @@ def Help():
     print(f"{Fore.CYAN}MacOS KRNL : ")
     print("    Soon\n")
     print(f"{Fore.CYAN}Windows : ")
-    print("    Soon\n")
+    print(f"    {Fore.LIGHTRED_EX}Troubleshooting : ")
+    print(f"        fix unexpectedclient : Fixes 'Kicked due to an unexpected client behaviour'")
+    print(f"        fix dllmissing : Fixes 'krnl.dll Missing' NOTE : Requieres putting the full KRNL path")
+    print(f"        fix dependenciesnotinstalled : Downloads every KRNL dll NOTE : Requieres putting the full KRNL path")
+    print(f"        fix outdated : Fixes 'KRNL Outdated' NOTE : Requires putting the full KRNL path")
+    print(f"        fix unknownerror : Fixes KRNL crashing because of an unknown error")
+    print(f"        fix downloadblock : Fixes google chrome blocking KRNL")
+    print(f"        fix krnldelete : Fixes KRNL Deleting")
+    print(f"        fix bootstrapper : Fixes ANY ERROR with the bootstrapper")
+    print(f"        fix infiniteinjection : Fixes KRNL getting stuck in a loop with injecting")
+    print(f"        fix injectionstuck : Fixes KRNL being stuck in Correct Key/Checking Key/Loading Dependencies")
+    print(f"        fix robloxnotfound : Fixes KRNL not finding ROBLOX")
+    print(f"        fix krnlcrash : Fixes KRNL Crashing")
+    print(f"        fix invalidkey : Fixes Invalid Key KRNL Error")
+    print(f"        fix errortxt : Fixes ERROR.txt")
     print(f"{Fore.CYAN}About Messages :")
     print(f"    {Fore.RED}[!]{Fore.WHITE} : Error")
     print(f"    {Fore.BLUE}[¡]{Fore.WHITE} : Info")
@@ -302,7 +330,6 @@ def Help():
     print(
         f"    {Fore.GREEN}[DEBUG]{Fore.WHITE} : Debug Messages (Disable with --quiet)")
     print(f"    {Fore.RED}[!DEBUG]{Fore.WHITE} : More detailed error")
-    # Its monke or monkey
 
 KrnlLauncherDownload = curl("https://pastebin.com/raw/wgeLyD2y")
 #KrnlApiDownload = curl("https://pastebin.com/raw/JKeXKjLf")
@@ -338,22 +365,84 @@ def GrapejuiceInstall():
 # Now i need to rewrite all the fucking code
 if __name__ == '__main__':
     for argument in sys.argv:
-        def GetFlag(text):
+        def GetFlag(text,iswin=false,isboth=false):
             if argument == text:
                 if windows:
-                    print("Executing any flag with windows will give massive errors")
-                    sys.exit()
+                    if iswin == False:
+                        if not isboth:
+                            print("Dont do that")
+                            sys.exit()
+                if iswin:
+                    if gentoo or arch or debian:
+                        if not isboth:
+                            print("Dont do that")
+                            sys.exit()
                 flagexecuted = True
                 return True
             else:
                 return False
-        if GetFlag("--quiet"):
+        if GetFlag("--quiet",true, true):
             quiet = True
 
-        if GetFlag("--help") or GetFlag("-h"):
+        if GetFlag("--help",true, true) or GetFlag("-h",true):
             flagexecuted = True
             Help()
             sys.exit()
+        # Im just making something to fix other errors, not krnl being outdated
+        elif GetFlag("fix errortxt",True,False):
+            if not sys.argv[2]:
+                DEBUG_ERROR("sys.argv[2] Missing, please insert KRNL's full path")
+                Error("Please insert KRNL's full path")
+                sys.exit()
+            wget("https://aka.ms/vs/16/release/vc_redist.x64.exe",f"C:/Users/{getpass.getuser()}/Downloads/vc_redist.x64.exe")
+            wget("https://go.microsoft.com/fwlink/?LinkId=2085155",f"C:/Users/{getpass.getuser()}/Downloads/dotnet472.exe")
+            bash(f"C:/Users/{getpass.getuser()}/Downloads/vc_redist.x64.exe")
+            bash(f"C:/Users/{getpass.getuser()}/Downloads/dotnet472.exe")
+        #elif GetFlag("fix dependenciesnotinstalled",True,False):
+        #    if not sys.argv[2]:
+        #       DEBUG_ERROR("sys.argv[2] Missing, please insert KRNL's full path")
+        #        Error("Please insert KRNL's full path")
+        #         sys.exit()
+        #    Info("Downloading Dependencies")
+        #    wget("",sys.argv[2])
+        #    #wget("https://k-storage.com/bootstrapper/files/krnl.dll",sys.argv[2])
+        #   Info("Done")
+        elif GetFlag("fix dllmissing",True,False):
+            if not sys.argv[2]:
+                DEBUG_ERROR("sys.argv[2] Missing, please insert KRNL's full path")
+                Error("Please insert KRNL's full path")
+                sys.exit()
+            Info("Downloading KRNL's DLL")
+            wget("https://k-storage.com/bootstrapper/files/krnl.dll",sys.argv[2] + "/krnl.dll")
+            Info("Done")
+        elif GetFlag("fix outdated",True,False):
+            if not sys.argv[2]:
+                DEBUG_ERROR("sys.argv[2] Missing, please insert KRNL's full path")
+                Error("Please insert KRNL's full path")
+                sys.exit()
+            Info("Downloading KRNL's DLL")
+            wget("https://k-storage.com/bootstrapper/files/krnl.dll",sys.argv[2])
+            Info("Done")
+        elif GetFlag("fix unexpectedclient",True,False):
+            Info("Deleting Roblox's Configuration Files")
+            if exists(f"C:/Users/{getpass.getuser()}/AppData/Local/Roblox/GlobalBasicSettings_13.xml"):
+                bash(f"rm C:/Users/{getpass.getuser()}/AppData/Local/Roblox/GlobalBasicSettings_13.xml")
+            else:
+                Warning(f"Configuration File 0 Not Found. Skipping")
+            if exists(f"C:/Users/{getpass.getuser()}/AppData/Local/Roblox/GlobalSettings_13.xml"):
+                bash(f"rm C:/Users/{getpass.getuser()}/AppData/Local/Roblox/GlobalSettings_13.xml")
+            else:
+                Warning(f"Configuration File 1 Not Found. Skipping")
+            if exists(f"C:/Users/{getpass.getuser()}/AppData/Local/Roblox/frm.cfg"):
+                bash(f"rm C:/Users/{getpass.getuser()}/AppData/Local/Roblox/frm.cfg")
+            else:
+                Warning(f"Configuration File 2 Not Found. Skipping")
+            if exists(f"C:/Users/{getpass.getuser()}/AppData/Local/Roblox/AnalysticsSettings"):
+                bash(f"rm C:/Users/{getpass.getuser()}/AppData/Local/Roblox/AnalysticsSettings")
+            else:
+                Warning(f"Configuration File 3 Not Found. Skipping")
+            wget("https://setup.rbxcdn.com/version-a10a6fc51c06421b-Roblox.exe",f"C:/Users/{getpass.getuser()}/Downloads/RobloxPlayerLauncher.exe")
+            bash(f"C:/Users/{getpass.getuser()}/Downloads/RobloxPlayerLauncher.exe")
         elif GetFlag("krnl launch"):
             if exists(KrnlPath) == False:
                 Error("KRNL Not installed")
@@ -391,7 +480,56 @@ if __name__ == '__main__':
             winetricks --force vcrun2019
             """)
             bash("bash /tmp/vcredist")
-        
+        elif GetFlag("install dotnet"):
+            if exists(KrnlPath) == False:
+                Error("KRNL Not installed")
+                DEBUG_ERROR(
+                    f"{KrnlPath} Does not exist, to install use install krnl")
+                sys.exit()
+            if exists(TkgPath) == False:
+                Error("TKG-Binary mouse patch not installed")
+                DEBUG_ERROR(
+                    f"{TkgPath} Does not exist, to install use install tkg")
+                sys.exit()
+            mkfile("/tmp/dotnet","""
+            if [[ -z "${PREFIX}" ]]; then
+            echo "What is your PLAYER wineprefix name?"
+            read PREFIX
+            fi
+            export WINEPREFIXPATH="$HOME/.local/share/grapejuice/prefixes/${PREFIX}"
+            export WINEPREFIX=$WINEPREFIXPATH 
+            export WINEARCH="win64" 
+            export WINEDEBUG="-all" 
+            export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" 
+            echo "[#] Downloading VCRedist"
+            winetricks --force dotnet472
+            """)
+            bash("bash /tmp/dotnet")
+        elif GetFlag("install dependencies"):
+            if exists(KrnlPath) == False:
+                Error("KRNL Not installed")
+                DEBUG_ERROR(
+                    f"{KrnlPath} Does not exist, to install use install krnl argument")
+                sys.exit()
+            if exists(TkgPath) == False:
+                Error("TKG-Binary mouse patch not installed")
+                DEBUG_ERROR(
+                    f"{TkgPath} Does not exist, to install use install tkg argument")
+                sys.exit()
+            mkfile("/tmp/dependencies","""
+            if [[ -z "${PREFIX}" ]]; then
+            echo "What is your PLAYER wineprefix name?"
+            read PREFIX
+            fi
+            export WINEPREFIXPATH="$HOME/.local/share/grapejuice/prefixes/${PREFIX}"
+            export WINEPREFIX=$WINEPREFIXPATH 
+            export WINEARCH="win64" 
+            export WINEDEBUG="-all" 
+            export WINEDLLOVERRIDES="dxdiagn=;winemenubuilder.exe=" 
+            echo "[#] Downloading VCRedist"
+            winetricks --force vcrun2019 dotnet472
+            """)
+            bash("bash /tmp/dependencies")
         #elif GetFlag("--linux-krnl-execute") or GetFlag("-lke"):
         #    if exists(KrnlPath) == False:
         #        Error("KRNL Not installed")
