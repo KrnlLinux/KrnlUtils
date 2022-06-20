@@ -1,3 +1,3 @@
 Moved to wiki
 
-NOTE : Krnl doesnt work on linux anymore because of an update
+NOTE : KrnlUtils is outdated, and i will create a remake soon
